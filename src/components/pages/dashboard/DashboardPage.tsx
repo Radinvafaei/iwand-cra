@@ -16,8 +16,12 @@ import SupportButton from 'src/components/support-button/SupportButton';
 import { InsightsComponent } from 'src/components/insights-component';
 import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
+import useGetShopName from "src/hooks/useGetShopName";
+import {useGetAgentUsage} from "src/service/hooks";
 
 const DashboardPage = () => {
+  const shopName = useGetShopName();
+  const {data} = useGetAgentUsage(shopName!);
   const handleDateRangeChange = (range: { start: Date; end: Date }) => {
     console.log('Date range changed:', range);
   };
