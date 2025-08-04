@@ -8,7 +8,7 @@ import {
     IGetInsightsResponse,
     IGetConversationUsageResponse,
     IGetConversations,
-    IGetAnalyticsResponse
+    IGetAnalyticsResponse, IGetAgentConfigResponse
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -57,7 +57,7 @@ export const useGetAnalytics = (params: IAnalyticsParams) => useQuery<AxiosRespo
     queryKey: ['insights', {params}]
 })
 
-export const useGetAgentsConfig = (shop: string) => useQuery({
+export const useGetAgentsConfig = (shop: string) => useQuery<AxiosResponse<IGetAgentConfigResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/agents-config',
