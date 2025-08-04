@@ -83,9 +83,17 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
                             destination: '/',
                         },
                         {
-                            label: 'Settings',
-                            destination: '/settings',
+                            label: 'Agent Config',
+                            destination: '/config',
                         },
+                        {
+                            label: 'Testing',
+                            destination: '/test',
+                        },
+                        {
+                            label: 'Conversation',
+                            destination: '/conversation',
+                        }
                     ]}
                     matcher={(link, location) => link.destination === (location as any)?.pathname}
                 />
