@@ -369,3 +369,7 @@ export interface IPostAgentConfigTogglePayload {
     agent_name: string;
     action: 'activate' | 'deactivate';
 }
+export interface IPostAgentConfigToggleWidgetPayload {
+    shop: string;
+    action: 'activate' | 'deactivate';
+}
