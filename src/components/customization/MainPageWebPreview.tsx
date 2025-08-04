@@ -9,11 +9,14 @@ import {
 } from "react-konva";
 import useImage from "use-image";
 import { hsbaToHex } from "src/utils";
+import desktopBotTemp from "src/assets/images/desktop-bot-temp.svg";
+import desktopPanel from "src/assets/images/desktop-panel.svg";
+import buttonIconSample from "src/assets/images/button-icon-sample.svg";
 
 export default function MainPageWebPreview({ form, mode }: any) {
-  const [image] = useImage("/images/desktop-bot-temp.svg");
-  const [bgImage] = useImage("/images/desktop-panel.svg");
-  const [flaotingButtonImage] = useImage("/images/button-icon-sample.svg");
+  const [image] = useImage(desktopBotTemp);
+  const [bgImage] = useImage(desktopPanel);
+  const [flaotingButtonImage] = useImage(buttonIconSample);
 
   const options = {
     textX: 440,

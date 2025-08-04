@@ -1,6 +1,7 @@
 import { ColorPicker, Text, TextField } from "@shopify/polaris";
 import { useState } from "react";
 import { CollapsibleSection } from "./CollapsibleSection";
+import inforamtion from "src/assets/images/information.svg";
 
 const TabButton = ({ caption, selected, onClick }: any) => (
   <button
@@ -46,7 +47,7 @@ export default function ProductPage({
               onChange={(e) => setForm({ ...form, productOpeningWelcome: e })}
             />
             <div className="flex gap-4 bg-[#EBF9FC] border border-solid border-[#98C6CD] rounded-md p-4 items-start mt-4">
-              <img src="/images/information.svg" alt="icon" />
+              <img src={inforamtion} alt="icon" />
               <div>
                 <Text variant="bodyMd" as="p">
                   The first message will always start with <b>"Nice choice"</b>

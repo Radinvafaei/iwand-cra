@@ -9,11 +9,14 @@ import {
 } from "react-konva";
 import useImage from "use-image";
 import { hsbaToHex } from "src/utils";
+import mobileBotTemp from "src/assets/images/mobile-bot-temp.svg";
+import mobilePanel from "src/assets/images/mobile-panel.svg";
+import buttonIconSample from "src/assets/images/button-icon-sample.svg";
 
 export default function MainPageMobilePreview({ form, mode }: any) {
-  const [image] = useImage("/images/mobile-bot-temp.svg");
-  const [bgImage] = useImage("/images/mobile-panel.svg");
-  const [flaotingButtonImage] = useImage("/images/button-icon-sample.svg");
+  const [image] = useImage(mobileBotTemp);
+  const [bgImage] = useImage(mobilePanel);
+  const [flaotingButtonImage] = useImage(buttonIconSample);
 
   const options = {
     textX: 440,

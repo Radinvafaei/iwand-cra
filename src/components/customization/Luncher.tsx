@@ -6,6 +6,7 @@ import {
 } from "@shopify/polaris";
 import { CollapsibleSection } from "./CollapsibleSection";
 import { fileToDataURL } from "src/utils";
+import buttonIcon from "src/assets/images/button-icon-sample.svg";
 
 export function Luncher({ form, setForm }: any) {
   return (
@@ -79,7 +80,7 @@ export function Luncher({ form, setForm }: any) {
             >
               <div className="bg-[#DEE2E6] rounded-sm flex items-center justify-center p-2 px-4 w-fit mx-auto mt-8">
                 <img
-                  src={form.floatingAvatar || "/images/button-icon-sample.svg"}
+                  src={form.floatingAvatar || buttonIcon}
                   alt="icon"
                   width={34}
                 />

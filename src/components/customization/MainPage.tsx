@@ -1,5 +1,6 @@
 import { ColorPicker, Text, TextField } from "@shopify/polaris";
 import { CollapsibleSection } from "./CollapsibleSection";
+import inforamtion from "src/assets/images/information.svg";
 
 const TabButton = ({ caption, selected, onClick }: any) => (
   <button
@@ -45,7 +46,7 @@ export default function MainPage({
               onChange={(e) => setForm({ ...form, mainOpeningWelcome: e })}
             />
             <div className="flex gap-4 bg-[#EBF9FC] border border-solid border-[#98C6CD] rounded-md p-4 items-start mt-4">
-              <img src="/images/information.svg" alt="icon" />
+              <img src={inforamtion} alt="icon" />
               <div>
                 <Text variant="bodyMd" as="p">
                   The Text of page will always start with <b>"Hi [name]"</b> if

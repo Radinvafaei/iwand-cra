@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { TabButton } from "../global/TabButton";
 import { hsbaToHex } from "src/utils";
+import desktopPanel from "src/assets/images/desktop-panel.svg";
+import mobilePanel from "src/assets/images/mobile-panel.svg";
+import buttonIcon from "src/assets/images/button-icon-sample.svg";
+import close from "src/assets/images/close.svg";
 
 export default function LuncherPreview({ form, previewTab }: any) {
   return (
@@ -13,11 +17,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
         }`}
       >
         <img
-          src={
-            previewTab === "web"
-              ? "/images/desktop-panel.svg"
-              : "/images/mobile-panel.svg"
-          }
+          src={previewTab === "web" ? desktopPanel : mobilePanel}
           className={`block absolute h-full object-cover ${
             previewTab === "web" ? "w-full" : "w-[318px]"
           }`}
@@ -33,10 +33,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
               className="absolute right-0 bottom-0 h-16 w-16 rounded-s-lg flex items-center justify-center"
               style={{ backgroundColor: hsbaToHex(form.buttonColor) }}
             >
-              <img
-                src={form.floatingAvatar || "/images/button-icon-sample.svg"}
-                alt="icon"
-              />
+              <img src={form.floatingAvatar || buttonIcon} alt="icon" />
             </div>
           )}
           {form.buttonStyle === "floating" && (
@@ -46,12 +43,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
             >
               {form.buttonType !== "label" && (
                 <span>
-                  <img
-                    src={
-                      form.floatingAvatar || "/images/button-icon-sample.svg"
-                    }
-                    alt="icon"
-                  />
+                  <img src={form.floatingAvatar || buttonIcon} alt="icon" />
                 </span>
               )}
               {form.buttonType !== "icon" && <span>{form.floatingLabel}</span>}
@@ -65,12 +57,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
             }`}
             style={{ borderColor: hsbaToHex(form.buttonColor) }}
           >
-            <img
-              src="/images/close.svg"
-              alt="icon"
-              width={20}
-              className="ml-auto"
-            />
+            <img src={close} alt="icon" width={20} className="ml-auto" />
             <div className="w-1/2 bg-[#F8F9FA] rounded-lg h-[42px]"></div>
             <div className="w-full bg-[#F8F9FA] rounded-lg h-[42px]"></div>
             <div
