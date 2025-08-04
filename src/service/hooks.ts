@@ -6,7 +6,9 @@ import {
     TInsightsParams,
     IAgentsUsageResponse,
     IGetInsightsResponse,
-    IGetConversationUsageResponse
+    IGetConversationUsageResponse,
+    IGetConversations,
+    IGetAnalyticsResponse
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -37,7 +39,7 @@ export const useConversationUsage = (shop: string) => useQuery<AxiosResponse<IGe
     queryKey: ['conversation-usage', shop]
 })
 
-export const useConversations = (params: IGetConversationsParams) => useQuery({
+export const useConversations = (params: IGetConversationsParams) => useQuery<AxiosResponse<IGetConversations>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/conversations',
@@ -46,7 +48,7 @@ export const useConversations = (params: IGetConversationsParams) => useQuery({
     queryKey: ['conversations', params]
 })
 
-export const useGetAnalytics = (params: IAnalyticsParams) => useQuery({
+export const useGetAnalytics = (params: IAnalyticsParams) => useQuery<AxiosResponse<IGetAnalyticsResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/insights',
