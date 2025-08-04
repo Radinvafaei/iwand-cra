@@ -7,7 +7,7 @@ import AgentConfigPage from "src/components/pages/agent-config";
 import ConversationPage from "src/components/pages/conversation";
 import TestingPage from "src/components/pages/testing";
 import Providers from "src/providers/Providers";
-import Customization from "./components/pages/CustomizationPage";
+import CustomizationPage from "./components/pages/CustomizationPage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/config" element={<AgentConfigPage />} />
         <Route path="/conversation" element={<ConversationPage />} />
         <Route path="/test" element={<TestingPage />} />
-        <Route path="/customization" element={<Customization />} />
+        <Route path="/customization" element={<CustomizationPage />} />
       </Routes>
     </Providers>
   );
