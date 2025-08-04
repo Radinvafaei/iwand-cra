@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
+import '@shopify/polaris/build/esm/styles.css';
 import './App.css';
+import {Route, Routes} from "react-router-dom";
+import DashboardPage from "src/components/pages/dashboard";
+import AgentConfigPage from "src/components/pages/agent-config";
+import ConversationPage from "src/components/pages/conversation";
+import TestingPage from "src/components/pages/testing";
+import Providers from "src/providers/Providers";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Providers>
+      <Routes>
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/config" element={<AgentConfigPage />} />
+        <Route path="/conversation" element={<ConversationPage />} />
+        <Route path="/test" element={<TestingPage />} />
+      </Routes>
+    </Providers>
   );
 }
 
