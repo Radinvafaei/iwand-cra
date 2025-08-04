@@ -51,21 +51,18 @@ const DashboardPage = () => {
       '#F97316'
     ];
 
-    // Transform agents with proper IDs
     const agents = apiResponse.agents.map((agent, index) => ({
       id: agent.name.toLowerCase().replace(/\s+/g, '-'),
       name: agent.name,
       color: colors[index % colors.length],
     }));
 
-    // Transform data - create chart data points
     const chartData = sortedDates.map(date => {
       const dataPoint: any = {
         date,
         total: 0,
       };
 
-      // Add data for each agent
       apiResponse.agents.forEach(agent => {
         const agentId = agent.name.toLowerCase().replace(/\s+/g, '-');
         const usageForDate = agent.usage.find(usage => usage.date === date);
