@@ -1,4 +1,4 @@
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import httpClient from "./client";
 import {
     IGetConversationsParams,
@@ -8,7 +8,7 @@ import {
     IGetInsightsResponse,
     IGetConversationUsageResponse,
     IGetConversations,
-    IGetAnalyticsResponse, IGetAgentConfigResponse
+    IGetAnalyticsResponse, IGetAgentConfigResponse, IPostAgentConfigTogglePayload
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -64,4 +64,11 @@ export const useGetAgentsConfig = (shop: string) => useQuery<AxiosResponse<IGetA
         params: {shop},
     }),
     queryKey: ['agents-config', shop]
+})
+
+export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) => useMutation({
+    mutationFn: async () => httpClient.request({
+        method: "POST",
+        url: '/agents-config/toggle',
+    })
 })

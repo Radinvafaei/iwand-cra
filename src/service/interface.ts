@@ -363,3 +363,9 @@ export interface IGetAgentConfigResponse {
     },
     widget_activated: boolean
 }
+
+export interface IPostAgentConfigTogglePayload {
+    shop: string;
+    agent_name: string;
+    action: 'activate' | 'deactivate';
+}
