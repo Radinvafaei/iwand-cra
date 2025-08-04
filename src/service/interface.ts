@@ -298,3 +298,68 @@ export interface IGetAnalyticsResponse {
         }
     }
 }
+
+export interface IGetAgentConfigResponse {
+    shop: "test.myshopify.com",
+    general_agents: {
+        "Inspire Me": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        },
+        "Pair Up": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        },
+        "Find It": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        },
+        "Snap & Match": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        }
+    },
+    product_agents: {
+        "Suits Me": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        },
+        "Style Idea": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        },
+        "Find Similar": {
+            name: string,
+            type: string,
+            activated: boolean,
+            description: string,
+            icon: string,
+            last_updated: string
+        }
+    },
+    widget_activated: boolean
+}
