@@ -8,7 +8,10 @@ import {
     IGetInsightsResponse,
     IGetConversationUsageResponse,
     IGetConversations,
-    IGetAnalyticsResponse, IGetAgentConfigResponse, IPostAgentConfigTogglePayload
+    IGetAnalyticsResponse,
+    IGetAgentConfigResponse,
+    IPostAgentConfigTogglePayload,
+    IPostAgentConfigToggleWidgetPayload
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -77,6 +80,7 @@ export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) =>
 export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidgetPayload) => useMutation({
     mutationFn: async () => httpClient.request({
         method: "POST",
-        url: '/agents-config/toggle',
+        url: '/agents-config/widget-toggle',
+        data
     })
 })
