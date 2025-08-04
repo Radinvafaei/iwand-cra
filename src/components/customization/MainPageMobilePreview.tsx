@@ -57,29 +57,23 @@ export default function MainPageMobilePreview({ form, mode }: any) {
   return mode === "intro" ? (
     <>
       <Stage
-        width={options.canvasWidth}
-        height={options.canvasHeight}
+        width={375}
+        height={812}
         style={{
           width: "100%",
         }}
       >
         <Layer>
-          {image && (
-            <KonvaImage
-              image={image}
-              width={options.canvasWidth}
-              height={options.canvasHeight}
-            />
-          )}
+          {image && <KonvaImage image={image} width={375} height={812} />}
           <Text
             text={form.mainIntroWelcome}
-            x={110}
+            x={20}
             y={200}
             fontSize={24}
             fontVariant="Bold"
             fill="#333"
             fontFamily="Arial"
-            width={360}
+            width={340}
             lineHeight={1.4}
           />
         </Layer>
@@ -89,7 +83,7 @@ export default function MainPageMobilePreview({ form, mode }: any) {
         canvas, .konvajs-content{
           width: 100%!important;
           height: auto!important;
-          aspect-ratio: .67;
+          aspect-ratio: .46;
         }
         .konvajs-content{
           max-width: 400px;
@@ -101,22 +95,16 @@ export default function MainPageMobilePreview({ form, mode }: any) {
   ) : (
     <>
       <Stage
-        width={options.canvasWidth}
-        height={options.canvasHeight}
+        width={500}
+        height={812}
         style={{
           width: "100%",
         }}
       >
         <Layer>
-          {bgImage && (
-            <KonvaImage
-              image={bgImage}
-              width={options.canvasWidth}
-              height={options.canvasHeight}
-            />
-          )}
+          {bgImage && <KonvaImage image={bgImage} width={500} height={812} />}
 
-          <Group x={options.canvasWidth - 90} y={650}>
+          <Group x={500 - 80} y={650}>
             <Rect
               width={80}
               height={80}
@@ -133,7 +121,7 @@ export default function MainPageMobilePreview({ form, mode }: any) {
               />
             )}
           </Group>
-          <Group x={options.canvasWidth - WIDTH - 100} y={500 - textHeight}>
+          <Group x={500 - WIDTH - 90} y={500 - textHeight}>
             <Rect
               width={WIDTH}
               height={textHeight + 230}
