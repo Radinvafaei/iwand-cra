@@ -159,7 +159,7 @@ const DashboardPage = () => {
               </Card>
 
               <Box paddingBlockStart="600">
-                <InsightsComponent />
+                <InsightsComponent shop={shopName || ''} />
               </Box>
 
               <Box paddingBlockStart="600">

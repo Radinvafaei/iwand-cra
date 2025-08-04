@@ -2,12 +2,12 @@
 import type {InsightCardProps} from './interface';
 import type {FC} from 'react';
 import {
-  Card,
-  InlineStack,
-  BlockStack,
-  Icon,
-  Text,
-  Tooltip,
+    Card,
+    InlineStack,
+    BlockStack,
+    Icon,
+    Text,
+    Tooltip,
 } from '@shopify/polaris';
 import { InfoIcon, ArrowDiagonalIcon } from '@shopify/polaris-icons';
 
