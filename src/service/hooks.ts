@@ -70,5 +70,13 @@ export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) =>
     mutationFn: async () => httpClient.request({
         method: "POST",
         url: '/agents-config/toggle',
+        data,
+    })
+})
+
+export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidgetPayload) => useMutation({
+    mutationFn: async () => httpClient.request({
+        method: "POST",
+        url: '/agents-config/toggle',
     })
 })
