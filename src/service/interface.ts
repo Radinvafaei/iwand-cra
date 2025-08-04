@@ -28,3 +28,16 @@ export interface IUsage {
     date: string;
     count: number;
 }
+
+export interface IGetInsightsResponse {
+    shop: string;
+    time_period: TTimePeriods
+    insights: IInsight[]
+}
+
+export interface IInsight {
+    metric: string,
+    with_iwand: string,
+    original: string,
+    icon: string
+}
