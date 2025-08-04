@@ -55,3 +55,246 @@ export interface IGetConversationUsageResponse {
         reset_date: string
     }
 }
+
+export interface IGetConversations {
+    shop: string;
+    summary: {
+        total_conversations: number,
+        total_users: number,
+        total_products_recommended: number,
+        total_products_viewed: number,
+        total_products_purchased: number,
+        conversion_rate: number,
+        view_rate: number
+    },
+    pagination: {
+        limit: number,
+        offset: number,
+        has_more: boolean,
+    },
+    conversations: IConversation[]
+}
+
+export interface IConversation {
+    id: string,
+    user: {
+        id: string,
+        type: string,
+        name: string,
+        email: string,
+        phone: string,
+        location: string
+    },
+    "messages": IMessage[],
+    "start_time": string,
+    "last_activity": string,
+    "duration_minutes": number,
+    "total_messages": number,
+    "agents_used": [
+        string,
+        string
+    ],
+    "products_recommended": number,
+    "products_viewed": number,
+    "products_purchased": number,
+    "status": string
+}
+
+export interface IMessage {
+
+}
+
+export interface IGetAnalyticsResponse {
+    shop: string,
+    time_period: TTimePeriods,
+    sales: {
+        total: number,
+        percentage_increase: number,
+        breakdown: {
+            iwand: {
+                amount: number,
+                percentage: number, original: {
+                    amount: number,
+                    percentage: number
+                }
+            }
+        },
+        conversion_funnel: {
+            stages: [
+                "session_start",
+                "product_list",
+                "product_page",
+                "add_to_cart",
+                "purchases"
+            ],
+            data: {
+                session_start: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                product_list: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                product_page: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                add_to_cart: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                purchases: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                }
+            }
+        },
+        retention: {
+            iwand: number,
+            original: number,
+            total: number
+        },
+        aov: {
+            iwand: number,
+            original: number,
+            total: number
+        },
+        data_analysis: {
+            segments: [
+                "With iWAND",
+                "Original",
+                "Total"
+            ],
+            stages: [
+                "session_start",
+                "product_list",
+                "product_page",
+                "add_to_cart",
+                "purchases"
+            ],
+            table_data: {
+                session_start: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                product_list: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                product_page: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                add_to_cart: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                },
+                purchases: {
+                    iwand: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    original: {
+                        users: number,
+                        conversion_rate: number
+                    },
+                    total: {
+                        users: number,
+                        conversion_rate: number
+                    }
+                }
+            }
+        }
+    }
+}
