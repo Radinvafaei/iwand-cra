@@ -1,6 +1,13 @@
 import {useQuery} from "@tanstack/react-query";
 import httpClient from "./client";
-import {IGetConversationsParams, IAnalyticsParams, TInsightsParams, IAgentsUsageResponse, IGetInsightsResponse} from "./interface";
+import {
+    IGetConversationsParams,
+    IAnalyticsParams,
+    TInsightsParams,
+    IAgentsUsageResponse,
+    IGetInsightsResponse,
+    IGetConversationUsageResponse
+} from "./interface";
 import {AxiosResponse} from "axios";
 
 export const useGetAgentUsage = (shop: string) => useQuery<AxiosResponse<IAgentsUsageResponse>>({
@@ -21,7 +28,7 @@ export const useGetInsights = (params: TInsightsParams) => useQuery<AxiosRespons
     queryKey: ['insights', params]
 })
 
-export const useConversationUsage = (shop: string) => useQuery({
+export const useConversationUsage = (shop: string) => useQuery<AxiosResponse<IGetConversationUsageResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/conversation-usage',

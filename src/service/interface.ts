@@ -41,3 +41,17 @@ export interface IInsight {
     original: string,
     icon: string
 }
+
+export interface IGetConversationUsageResponse {
+    shop: string,
+    usage: {
+        current: number,
+        limit: number,
+        percentage: number,
+        remaining: number
+    },
+    period: {
+        type: string,
+        reset_date: string
+    }
+}
