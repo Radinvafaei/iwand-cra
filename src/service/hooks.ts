@@ -1,4 +1,4 @@
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import httpClient from "./client";
 import {
     IGetConversationsParams,
@@ -6,7 +6,12 @@ import {
     TInsightsParams,
     IAgentsUsageResponse,
     IGetInsightsResponse,
-    IGetConversationUsageResponse
+    IGetConversationUsageResponse,
+    IGetConversations,
+    IGetAnalyticsResponse,
+    IGetAgentConfigResponse,
+    IPostAgentConfigTogglePayload,
+    IPostAgentConfigToggleWidgetPayload
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -37,7 +42,7 @@ export const useConversationUsage = (shop: string) => useQuery<AxiosResponse<IGe
     queryKey: ['conversation-usage', shop]
 })
 
-export const useConversations = (params: IGetConversationsParams) => useQuery({
+export const useConversations = (params: IGetConversationsParams) => useQuery<AxiosResponse<IGetConversations>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/conversations',
@@ -46,7 +51,7 @@ export const useConversations = (params: IGetConversationsParams) => useQuery({
     queryKey: ['conversations', params]
 })
 
-export const useGetAnalytics = (params: IAnalyticsParams) => useQuery({
+export const useGetAnalytics = (params: IAnalyticsParams) => useQuery<AxiosResponse<IGetAnalyticsResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/insights',
@@ -55,11 +60,27 @@ export const useGetAnalytics = (params: IAnalyticsParams) => useQuery({
     queryKey: ['insights', {params}]
 })
 
-export const useGetAgentsConfig = (shop: string) => useQuery({
+export const useGetAgentsConfig = (shop: string) => useQuery<AxiosResponse<IGetAgentConfigResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: '/agents-config',
         params: {shop},
     }),
     queryKey: ['agents-config', shop]
+})
+
+export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) => useMutation({
+    mutationFn: async () => httpClient.request({
+        method: "POST",
+        url: '/agents-config/toggle',
+        data,
+    })
+})
+
+export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidgetPayload) => useMutation({
+    mutationFn: async () => httpClient.request({
+        method: "POST",
+        url: '/agents-config/widget-toggle',
+        data
+    })
 })
