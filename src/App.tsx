@@ -13,7 +13,7 @@ function App() {
     <Providers>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
-        <Route path="/config" element={<AgentConfigPage />} />
+        <Route path="/config" element={<AgentConfigPage/>} />
         <Route path="/conversation" element={<ConversationPage />} />
         <Route path="/test" element={<TestingPage />} />
       </Routes>

@@ -38,6 +38,21 @@ export interface DateRange {
   end: Date;
 }
 
+export interface IUsage {
+  date: string;
+  count: number;
+}
+
+export interface IAgentUsage {
+  name: string;
+  usage: IUsage[];
+}
+
+export interface IAgentsUsageResponse {
+  shop: string;
+  agents: IAgentUsage[];
+}
+
 export interface AgentsUsageChartProps {
   data?: AgentUsageData[];
   agents?: Agent[];
