@@ -101,7 +101,12 @@ export interface IConversation {
 }
 
 export interface IMessage {
-
+    "id": "msg_0_0_user",
+    "type": "user",
+    "content": "Can you recommend shoes for running?",
+    "timestamp": "2025-08-06T12:40:50.330654",
+    "has_image": false,
+    "image_url": "https://example.com/image_8.jpg"
 }
 
 export interface IGetAnalyticsResponse {
