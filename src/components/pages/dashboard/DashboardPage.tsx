@@ -21,7 +21,7 @@ import { useGetAgentUsage } from "src/service/hooks";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
-  const { data } = useGetAgentUsage(shopName!);
+  const { data } = useGetAgentUsage(shopName || 'test');
   const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
       return { chartData: [], chartAgents: [] };
@@ -90,7 +90,7 @@ const DashboardPage = () => {
     { name: 'Used', value: 1980 },
     { name: 'Remaining', value: 20 },
   ];
-  console.log({chartData, data, chartAgents})
+
   return (
       <>
         <div
