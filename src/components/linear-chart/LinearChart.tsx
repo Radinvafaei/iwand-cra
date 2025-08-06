@@ -22,6 +22,7 @@ const LineChart: FC<LineChartProps> = ({
   xAxisKey = 'name',
   yAxisDomain,
 }) => {
+  console.log({data})
   return (
     <ResponsiveContainer width="100%" height={height}>
       <RechartsLineChart

@@ -20,7 +20,7 @@ import { AdjustIcon, CalendarIcon, XIcon } from '@shopify/polaris-icons';
 import { LineChart } from 'src/components/linear-chart';
 
 const AgentsUsageChart: FC<AgentsUsageChartProps> = ({data = [], agents = [], onDateRangeChange, onAgentFilterChange,}) => {
-  const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>([]);
+  const [selectedAgentIds, setSelectedAgentIds] = useState<string[]>(['total']);
   const [datePickerActive, setDatePickerActive] = useState(false);
   const [filterPopoverActive, setFilterPopoverActive] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
