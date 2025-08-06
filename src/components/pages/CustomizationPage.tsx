@@ -30,6 +30,11 @@ export default function CustomizationPage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [previewTab, setPreviewTab] = useState("web");
   const [mainPageSelectedTab, setMainPageSelectedTab] = useState("opening");
+
+  
+
+
+
   const [productPageSelectedTab, setProductPageSelectedTab] =
     useState("opening");
   const [form, setForm] = useState({
