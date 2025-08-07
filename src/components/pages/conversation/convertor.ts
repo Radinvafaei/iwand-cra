@@ -19,7 +19,6 @@ export const conversationConvertor = (messages?: IMessage[]): IAIChats[] => {
         };
 
         if (message.type === 'bot') {
-            // اگه agent تغییر کرده بود، گروه قبلی رو ذخیره کن و یه گروه جدید بساز
             if (message.agent !== currentAgent) {
                 if (currentGroup) {
                     convertedMessage.unshift(currentGroup);
@@ -32,11 +31,9 @@ export const conversationConvertor = (messages?: IMessage[]): IAIChats[] => {
                 };
             }
 
-            // پیام bot رو به گروه فعلی اضافه کن
             currentGroup?.messages.unshift(chatMessage);
 
         } else if (message.type === 'user') {
-            // اگه هنوز گروهی نداریم، unknown_agent بساز
             if (!currentGroup) {
                 currentAgent = 'unknown_agent';
                 currentGroup = {
@@ -46,12 +43,10 @@ export const conversationConvertor = (messages?: IMessage[]): IAIChats[] => {
                 };
             }
 
-            // پیام user رو به گروه فعلی اضافه کن
             currentGroup.messages.unshift(chatMessage);
         }
     }
 
-    // گروه آخر رو فراموش نکن
     if (currentGroup) {
         convertedMessage.unshift(currentGroup);
     }

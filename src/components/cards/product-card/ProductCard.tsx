@@ -39,7 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({
         <img
           alt={styleName}
           width={146}
-          height={200}
+          height={180}
           style={{
             objectFit: 'cover',
             alignItems: 'center',

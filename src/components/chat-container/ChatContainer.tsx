@@ -68,19 +68,22 @@ const ChatContainer: FC<IAIChats> = ({
                           </Text>
                       </div>
                   </Box>
-                      <Box paddingBlockStart="400">
-                      <InlineStack gap="300" wrap>
-                          {message.products.map((product, index) => (
-                              <ProductCard
-                                  key={index}
-                                  title={product.name}
-                                  styleName={product.brand}
-                                  imageUrl={product.image_url}
-                                  price={product.price}
-                                  onClick={() => console.log('Product clicked:', product.name)}/>
-                          ))}
-                      </InlineStack>
-                  </Box></>
+                      {message.message_type === "text_with_products" &&
+                          <Box paddingBlockStart="400">
+                              <InlineStack gap="300" wrap>
+                                  {message.products.map((product, index) => (
+                                      <ProductCard
+                                          key={index}
+                                          title={product.name}
+                                          styleName={product.brand}
+                                          imageUrl={product.image_url}
+                                          price={product.price}
+                                          onClick={() => console.log('Product clicked:', product.name)}/>
+                                  ))}
+                              </InlineStack>
+                          </Box>
+                      }
+                  </>
               )}
               {message.type === 'user' && (
                 <Box>
@@ -105,47 +108,45 @@ const ChatContainer: FC<IAIChats> = ({
           ))}
         </BlockStack>
       </Box>
-
-      {/*{status && (
+        {messages[0].products.}
         <div style={{ marginTop: '10px' }}>
-          <Divider />
-          <div
-            style={{
-              width: 'full',
-              padding: '20px',
-              backgroundColor: `${status === 'viewed' ? '#EBF8FF' : '#EBFFEF'}`,
-            }}
-          >
-            <InlineStack gap="300" align="center">
-              {productInfo?.image && (
-                <Box>
-                  <img
-                    src={productInfo.image}
-                    alt={productInfo.name}
-                    width={40}
-                    height={40}
-                    style={{
-                      objectFit: 'cover',
-                      borderRadius: '8px',
-                    }}
-                  />
-                </Box>
-              )}
+            <Divider />
+            <div
+                style={{
+                    width: 'full',
+                    padding: '20px',
+                    backgroundColor: `${status === 'viewed' ? '#EBF8FF' : '#EBFFEF'}`,
+                }}
+            >
+                <InlineStack gap="300" align="center">
+                    {productInfo?.image && (
+                        <Box>
+                            <img
+                                src={productInfo.image}
+                                alt={productInfo.name}
+                                width={40}
+                                height={40}
+                                style={{
+                                    objectFit: 'cover',
+                                    borderRadius: '8px',
+                                }}
+                            />
+                        </Box>
+                    )}
 
-              <BlockStack gap="100">
-                <Badge tone={status === 'purchased' ? 'success' : 'enabled'}>
-                  {status === 'purchased' ? 'Purchased' : 'Viewed product'}
-                </Badge>
-                {productInfo?.name && (
-                  <Text variant="bodySm" as="p">
-                    {productInfo.name}
-                  </Text>
-                )}
-              </BlockStack>
-            </InlineStack>
-          </div>
+                    <BlockStack gap="100">
+                        <Badge tone={status === 'purchased' ? 'success' : 'enabled'}>
+                            {status === 'purchased' ? 'Purchased' : 'Viewed product'}
+                        </Badge>
+                        {productInfo?.name && (
+                            <Text variant="bodySm" as="p">
+                                {productInfo.name}
+                            </Text>
+                        )}
+                    </BlockStack>
+                </InlineStack>
+            </div>
         </div>
-      )}*/}
     </Card>
   );
 };
