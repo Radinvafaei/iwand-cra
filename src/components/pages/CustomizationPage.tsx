@@ -15,7 +15,7 @@ import {
   Button,
 } from "@shopify/polaris";
 // import { TitleBar } from "@shopify/app-bridge-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TabButton } from "../global/TabButton";
 import { Luncher } from "../customization/Luncher";
 import MainPage from "../customization/MainPage";
@@ -25,15 +25,26 @@ import MainPageWebPreview from "../customization/MainPageWebPreview";
 import MainPageMobilePreview from "../customization/MainPageMobilePreview";
 import ProductPageWebPreview from "../customization/ProductPageWebPreview";
 import ProductPageMobilePreview from "../customization/ProductPageMobilePreview";
+import {
+  useGetCustomization,
+  useUpdateCustomization,
+} from "src/service/customizationServices/customization.service";
 
 export default function CustomizationPage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [previewTab, setPreviewTab] = useState("web");
   const [mainPageSelectedTab, setMainPageSelectedTab] = useState("opening");
 
-  
+  const { data: customizationData, isLoading: customizationLoading } =
+    useGetCustomization("wand-test-store.myshopify.com");
 
-
+  useEffect(() => {
+    if (customizationData?.data) {
+      setForm(customizationData?.data.customization_config);
+    }
+  }, [customizationData]);
+  const { mutate: updateCustimization, isPending: updateCustomizationLoading } =
+    useUpdateCustomization("wand-test-store.myshopify.com");
 
   const [productPageSelectedTab, setProductPageSelectedTab] =
     useState("opening");
@@ -69,7 +80,20 @@ export default function CustomizationPage() {
     },
     productIntroWelcome: "What can I help you with this item?",
   });
-  return (
+
+  const updateCustimizationHandle = async () => {
+    try {
+      await updateCustimization({ ...form });
+    } catch (error) {
+      console.error("Error updating customization:", error);
+    }
+  };
+
+  return customizationLoading ? (
+    <div className="inset-0 z-10 absolute flex items-center justify-center">
+      Loading...
+    </div>
+  ) : (
     <Page fullWidth>
       {/* <TitleBar title="Customization" /> */}
       <div className="p-2 mb-6 border-b border-solid border-transparent border-b-gray-200 flex gap-4">
@@ -147,7 +171,12 @@ export default function CustomizationPage() {
               />
             )}
             <div className="flex justify-end mt-6">
-              <Button size="large" variant="primary">
+              <Button
+                size="large"
+                variant="primary"
+                onClick={updateCustimizationHandle}
+                loading={updateCustomizationLoading}
+              >
                 Apply Changes
               </Button>
             </div>
