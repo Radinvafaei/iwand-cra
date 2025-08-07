@@ -1,3 +1,5 @@
+import {IChatMessages} from "../pages/conversation/convertor";
+
 export interface Message {
   id: string;
   text: string;
@@ -12,15 +14,3 @@ export interface Product {
   price: string;
 }
 
-export interface ChatContainerProps {
-  messages: Message[];
-  status?: 'viewed' | 'purchased';
-  productInfo?: {
-    name: string;
-    image: string;
-    price?: string;
-  };
-  agentName?: string;
-  products?: Product[];
-  date: string;
-}

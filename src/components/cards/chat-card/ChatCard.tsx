@@ -67,7 +67,7 @@ const ChatCard: FC<ChatCardProps> = ({
         <Text as="p" variant="bodySm" truncate>
           {message}
         </Text>
-        {parseInt(messageCount) > 0 && (
+        {messageCount > 0 && (
           <div style={messageCountStyles}>{messageCount}</div>
         )}
       </div>

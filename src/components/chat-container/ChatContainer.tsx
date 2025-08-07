@@ -10,16 +10,13 @@ import {
   BlockStack,
   Divider,
 } from '@shopify/polaris';
-import type {ChatContainerProps} from './interface';
 import { ProductCard } from 'src/components/cards/product-card';
+import {IAIChats} from "../pages/conversation/convertor";
 
-const ChatContainer: FC<ChatContainerProps> = ({
+const ChatContainer: FC<IAIChats> = ({
   messages,
-  status,
-  productInfo,
-  agentName,
-  products,
-  date,
+  agent,
+  id
 }) => {
   return (
     <Card padding="0">
@@ -33,7 +30,7 @@ const ChatContainer: FC<ChatContainerProps> = ({
           }}
         >
           <Text variant="headingMd" as="h2">
-            {agentName || 'Chat Agent'}
+            {agent}
           </Text>
         </div>
       </Box>
@@ -48,31 +45,44 @@ const ChatContainer: FC<ChatContainerProps> = ({
           <Box>
             <InlineStack align="center">
               <Badge tone="enabled" size="large">
-                {date}
+                {messages[0].created_at}
               </Badge>
             </InlineStack>
           </Box>
 
           {messages.map((message) => (
-            <Box key={message.id}>
-              {message.sender === 'agent' && (
-                <Box>
-                  <div
-                    style={{
-                      backgroundColor: 'white',
-                      padding: '12px 16px',
-                      borderRadius: '16px',
-                      maxWidth: '70%',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                    }}
-                  >
-                    <Text variant="bodyMd" as="p">
-                      {message.text}
-                    </Text>
-                  </div>
-                </Box>
+            <Box key={message.created_at}>
+              {message.type === 'bot' && (
+                  <><Box>
+                      <div
+                          style={{
+                              backgroundColor: 'white',
+                              padding: '12px 16px',
+                              borderRadius: '16px',
+                              maxWidth: '70%',
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                          }}
+                      >
+                          <Text variant="bodyMd" as="p">
+                              {message.content}
+                          </Text>
+                      </div>
+                  </Box>
+                      <Box paddingBlockStart="400">
+                      <InlineStack gap="300" wrap>
+                          {message.products.map((product, index) => (
+                              <ProductCard
+                                  key={index}
+                                  title={product.name}
+                                  styleName={product.brand}
+                                  imageUrl={product.image_url}
+                                  price={product.price}
+                                  onClick={() => console.log('Product clicked:', product.name)}/>
+                          ))}
+                      </InlineStack>
+                  </Box></>
               )}
-              {message.sender === 'user' && (
+              {message.type === 'user' && (
                 <Box>
                   <InlineStack align="end">
                     <div
@@ -85,7 +95,7 @@ const ChatContainer: FC<ChatContainerProps> = ({
                       }}
                     >
                       <Text variant="bodyMd" as="p" tone="text-inverse">
-                        {message.text}
+                        {message.content}
                       </Text>
                     </div>
                   </InlineStack>
@@ -93,29 +103,10 @@ const ChatContainer: FC<ChatContainerProps> = ({
               )}
             </Box>
           ))}
-
-          {products && products.length > 0 && (
-            <Box paddingBlockStart="400">
-              <InlineStack gap="300" wrap>
-                {products.map((product, index) => (
-                  <ProductCard
-                    key={index}
-                    title={product.title}
-                    styleName={product.styleName}
-                    imageUrl={product.imageUrl}
-                    price={product.price}
-                    onClick={() =>
-                      console.log('Product clicked:', product.title)
-                    }
-                  />
-                ))}
-              </InlineStack>
-            </Box>
-          )}
         </BlockStack>
       </Box>
 
-      {status && (
+      {/*{status && (
         <div style={{ marginTop: '10px' }}>
           <Divider />
           <div
@@ -154,7 +145,7 @@ const ChatContainer: FC<ChatContainerProps> = ({
             </InlineStack>
           </div>
         </div>
-      )}
+      )}*/}
     </Card>
   );
 };

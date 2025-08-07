@@ -8,14 +8,18 @@ import { InfoCard } from 'src/components/cards/info-card';
 import { Divider, BlockStack, Text, Box } from '@shopify/polaris';
 import { mockProducts, initialMessages, mockChats } from './mock-date';
 import SupportButton from 'src/components/support-button/SupportButton';
+import {useGetConversations} from "src/service/hooks";
+import useGetShopName from "src/hooks/useGetShopName";
+import {conversationConvertor} from "./convertor";
 
 
 const ConversationPage: FC = () => {
-  const [selectedChat, setSelectedChat] = useState<number | null>(1);
-
-  const [messages, setMessages] =
-    useState<Record<number, Message[]>>(initialMessages);
-
+  const [selectedChat, setSelectedChat] = useState<number>(0);
+  const shop = useGetShopName();
+  const { data } = useGetConversations({shop: shop || 'test'});
+  // const [messages, setMessages] = useState<Record<number, Message[]>>(initialMessages);
+  const convertedData = conversationConvertor(data?.data?.conversations[selectedChat]?.messages)
+    console.log({ convertedData })
   const selectedChatData = mockChats.find((chat) => chat.id === selectedChat);
 
   return (
@@ -38,18 +42,18 @@ const ConversationPage: FC = () => {
           overflowY: 'auto',
           alignItems: 'center',
           borderRight: '1px solid #E3E3E3',
-          height: 'calc(100vh - 64px)',
+          height: '100vh',
           zIndex: 10,
         }}
       >
-        {mockChats.map((chat) => (
-          <div key={chat.id} onClick={() => setSelectedChat(chat.id)}>
+        {data?.data?.conversations.map((chat, i) => (
+          <div key={chat.id} onClick={() => setSelectedChat(i)}>
             <ChatCard
-              username={chat.username}
-              message={chat.message}
-              messageTime={chat.messageTime}
-              messageCount={chat.messageCount}
-              selected={selectedChat === chat.id}
+              username={chat.user.name}
+              message={chat.messages[0]?.content}
+              messageTime={chat.last_activity}
+              messageCount={chat.total_messages}
+              selected={selectedChat === i}
             />
           </div>
         ))}
@@ -59,7 +63,7 @@ const ConversationPage: FC = () => {
         style={{
           flex: 1,
           display: 'flex',
-          height: 'calc(100vh - 64px)',
+          height: '100vh',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'start',
@@ -68,7 +72,14 @@ const ConversationPage: FC = () => {
           gap: '16px',
         }}
       >
-        {mockChats.map((chatData) => (
+          {convertedData.map(chatData => (
+              <div key={chatData.id} style={{ width: '100%', maxWidth: '800px' }}>
+                  <ChatContainer
+                      {...chatData}
+                  />
+              </div>
+          ))}
+        {/*{convertedData.map((chatData) => (
           <div key={chatData.id} style={{ width: '100%', maxWidth: '800px' }}>
             <ChatContainer
               messages={messages[chatData.id] || []}
@@ -79,7 +90,7 @@ const ConversationPage: FC = () => {
               date={chatData.date}
             />
           </div>
-        ))}
+        ))}*/}
       </div>
 
       <div
@@ -87,7 +98,7 @@ const ConversationPage: FC = () => {
           display: 'flex',
           alignItems: 'start',
           justifyContent: 'center',
-          height: 'calc(100vh - 64px)',
+          height: '100vh',
           width: '265px',
           backgroundColor: 'var(--p-color-bg-surface)',
           borderLeft: '1px solid var(--p-color-border)',

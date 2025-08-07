@@ -84,3 +84,12 @@ export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidge
         data
     })
 })
+
+export const useGetConversations = (params: IGetConversationsParams) => useQuery<AxiosResponse<IGetConversations>>({
+    queryFn: async () => httpClient.request({
+        method: "GET",
+        url: '/conversations',
+        params,
+    }),
+    queryKey: ['get_conversations', params],
+})

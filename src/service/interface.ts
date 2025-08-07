@@ -7,8 +7,8 @@ export type TTimePeriods = 'all_time' | '12_months' | '30_days' | '7_days' | '24
 
 export interface IGetConversationsParams {
     shop: string;
-    limit: number;
-    offset: number;
+    limit?: number;
+    offset?: number;
 }
 
 export interface IAnalyticsParams {
@@ -85,28 +85,40 @@ export interface IConversation {
         phone: string,
         location: string
     },
-    "messages": IMessage[],
-    "start_time": string,
-    "last_activity": string,
-    "duration_minutes": number,
-    "total_messages": number,
-    "agents_used": [
-        string,
-        string
-    ],
-    "products_recommended": number,
-    "products_viewed": number,
-    "products_purchased": number,
-    "status": string
+    messages: IMessage[],
+    start_time: string,
+    last_activity: string,
+    duration_minutes: number,
+    total_messages: number,
+    agents_used: string[],
+    products_recommended: number,
+    products_viewed: number,
+    products_purchased: number,
+    status: string
 }
 
 export interface IMessage {
-    "id": "msg_0_0_user",
-    "type": "user",
-    "content": "Can you recommend shoes for running?",
-    "timestamp": "2025-08-06T12:40:50.330654",
-    "has_image": false,
-    "image_url": "https://example.com/image_8.jpg"
+    id: string;
+    type: string;
+    content: string;
+    timestamp: string;
+    has_image: boolean;
+    image_url: string;
+    agent: string;
+    message_type: string;
+    products: IMessageProduct[]
+}
+
+export interface IMessageProduct {
+    id: string,
+    name: string,
+    brand: string,
+    price: number,
+    image_url: string,
+    viewed: boolean,
+    purchased: boolean,
+    viewed_at: string,
+    purchased_at: string,
 }
 
 export interface IGetAnalyticsResponse {
@@ -118,7 +130,8 @@ export interface IGetAnalyticsResponse {
         breakdown: {
             iwand: {
                 amount: number,
-                percentage: number, original: {
+                percentage: number,
+                original: {
                     amount: number,
                     percentage: number
                 }
@@ -305,7 +318,7 @@ export interface IGetAnalyticsResponse {
 }
 
 export interface IGetAgentConfigResponse {
-    shop: "test.myshopify.com",
+    shop: string,
     general_agents: {
         "Inspire Me": {
             name: string,

@@ -1,6 +1,6 @@
 export interface ChatCardProps {
   username: string;
-  messageCount: string;
+  messageCount: number;
   messageTime: string;
   message: string;
   selected?: boolean;

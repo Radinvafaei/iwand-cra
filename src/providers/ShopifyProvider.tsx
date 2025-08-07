@@ -75,7 +75,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <BrowserRouter>
-            <AppBridgeProvider config={appBridgeConfig}>
+            {/*<AppBridgeProvider config={appBridgeConfig}>
                 <NavigationMenu
                     navigationLinks={[
                         {
@@ -96,9 +96,9 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
                         }
                     ]}
                     matcher={(link, location) => link.destination === (location as any)?.pathname}
-                />
+                />*/}
                 {children}
-            </AppBridgeProvider>
+            {/*</AppBridgeProvider>*/}
         </BrowserRouter>
     )
 }

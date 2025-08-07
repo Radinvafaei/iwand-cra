@@ -2,6 +2,6 @@ export interface ProductCardProps {
   title: string;
   styleName: string;
   imageUrl: string;
-  price: string;
+  price: number;
   onClick: () => void;
 }
