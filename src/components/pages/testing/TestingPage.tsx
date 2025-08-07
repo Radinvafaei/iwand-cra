@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import {type FC, useState, useCallback } from 'react';
+import { type FC, useState, useCallback } from "react";
 import {
   Page,
   Button,
@@ -11,11 +11,11 @@ import {
   BlockStack,
   InlineStack,
   Box,
-} from '@shopify/polaris';
-import { MobileBrowser } from 'src/components/mobile-browser';
-import { DesktopBrowser } from 'src/components/desktop-browser';
-import SupportButton from 'src/components/support-button/SupportButton';
-import {CongratsIcon} from "../../../icons";
+} from "@shopify/polaris";
+import { MobileBrowser } from "src/components/mobile-browser";
+import { DesktopBrowser } from "src/components/desktop-browser";
+import SupportButton from "src/components/support-button/SupportButton";
+import { CongratsIcon } from "../../../icons";
 
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -23,14 +23,14 @@ const TestingPage: FC = () => {
 
   const tabs = [
     {
-      id: 'mobile',
-      content: 'Mobile',
-      panelID: 'mobile-content',
+      id: "mobile",
+      content: "Mobile",
+      panelID: "mobile-content",
     },
     {
-      id: 'desktop',
-      content: 'Desktop',
-      panelID: 'desktop-content',
+      id: "desktop",
+      content: "Desktop",
+      panelID: "desktop-content",
     },
   ];
 
@@ -44,7 +44,7 @@ const TestingPage: FC = () => {
 
   const handleModalClose = useCallback(() => {
     setIsModalOpen(false);
-    console.log('Modal closed');
+    console.log("Modal closed");
   }, []);
 
   return (
@@ -61,9 +61,8 @@ const TestingPage: FC = () => {
         <Tabs tabs={tabs} selected={selectedTab} onSelect={setSelectedTab}>
           <div
             style={{
-              padding: '20px',
-              display: 'flex',
-              justifyContent: 'center',
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             {selectedTab === 0 && <MobileBrowser />}
@@ -82,14 +81,14 @@ const TestingPage: FC = () => {
             <InlineStack align="center">
               <div
                 style={{
-                  width: '100px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  backgroundColor: '#f0f0f0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '16px',
+                  width: "100px",
+                  height: "48px",
+                  borderRadius: "50%",
+                  backgroundColor: "#f0f0f0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "16px",
                 }}
               >
                 <CongratsIcon />

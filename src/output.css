@@ -256,8 +256,14 @@
   .aspect-\[1\] {
     aspect-ratio: 1;
   }
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
   .h-10 {
     height: calc(var(--spacing) * 10);
+  }
+  .h-12 {
+    height: calc(var(--spacing) * 12);
   }
   .h-16 {
     height: calc(var(--spacing) * 16);
@@ -270,6 +276,9 @@
   }
   .h-full {
     height: 100%;
+  }
+  .max-h-full {
+    max-height: 100%;
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -410,6 +419,9 @@
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
+  }
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);

@@ -33,17 +33,25 @@ export default function LuncherPreview({ form, previewTab }: any) {
               className="absolute right-0 bottom-0 h-16 w-16 rounded-s-lg flex items-center justify-center"
               style={{ backgroundColor: hsbaToHex(form.buttonColor) }}
             >
-              <img src={form.floatingAvatar || buttonIcon} alt="icon" />
+              <img
+                src={form.floatingAvatar || buttonIcon}
+                alt="icon"
+                className="max-h-full aspect-square"
+              />
             </div>
           )}
           {form.buttonStyle === "floating" && (
             <div
-              className={`absolute -bottom-20 h-16  px-4 text-white text-base  font-semibold rounded-xl flex items-center justify-center gap-2 right-4`}
+              className={`absolute -bottom-20 h-16  px-2 text-white text-base  font-semibold rounded-xl flex items-center justify-center gap-2 right-4`}
               style={{ backgroundColor: hsbaToHex(form.buttonColor) }}
             >
               {form.buttonType !== "label" && (
-                <span>
-                  <img src={form.floatingAvatar || buttonIcon} alt="icon" />
+                <span className="h-12">
+                  <img
+                    src={form.floatingAvatar || buttonIcon}
+                    alt="icon"
+                    className="max-h-full aspect-square"
+                  />
                 </span>
               )}
               {form.buttonType !== "icon" && <span>{form.floatingLabel}</span>}
