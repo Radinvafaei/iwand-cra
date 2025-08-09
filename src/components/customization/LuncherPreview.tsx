@@ -42,7 +42,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
           )}
           {form.buttonStyle === "floating" && (
             <div
-              className={`absolute -bottom-20 h-16  px-2 text-white text-base  font-semibold rounded-xl flex items-center justify-center gap-2 right-4`}
+              className={`aspect-square absolute -bottom-20 h-16  px-2 text-white text-base  font-semibold rounded-xl flex items-center justify-center gap-2 right-4`}
               style={{ backgroundColor: hsbaToHex(form.buttonColor) }}
             >
               {form.buttonType !== "label" && (
