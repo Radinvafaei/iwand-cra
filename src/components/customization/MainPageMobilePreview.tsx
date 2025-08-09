@@ -23,11 +23,11 @@ export default function MainPageMobilePreview({ form, mode }: any) {
     textY: 100,
     fontSize: 18,
     textColor: "black",
-    canvasWidth: 600,
-    canvasHeight: 900,
+    canvasWidth: 375,
+    canvasHeight: 812,
   };
 
-  const WIDTH = 400;
+  const WIDTH = 375;
 
   const [textHeight, setTextHeight] = useState(50);
   const [textWidth, setTextWidth] = useState(50);
@@ -86,7 +86,7 @@ export default function MainPageMobilePreview({ form, mode }: any) {
           aspect-ratio: .46;
         }
         .konvajs-content{
-          max-width: 400px;
+          max-width: 300px;
           margin:auto;
         }
         `}
@@ -212,10 +212,10 @@ export default function MainPageMobilePreview({ form, mode }: any) {
         canvas, .konvajs-content{
           width: 100%!important;
           height: auto!important;
-          aspect-ratio: .67;
+          aspect-ratio: .616;
         }
         .konvajs-content{
-          max-width: 400px;
+          max-width: 300px;
           margin:auto;
         }
         `}
