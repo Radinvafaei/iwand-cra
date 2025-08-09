@@ -29,6 +29,28 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const { isReady, isEmbedded } = useEmbedding();
   const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
   const [appBridgeError, setAppBridgeError] = useState<string>();
+  const [navLinks, setNavLinks] = useState([
+    {
+      label: "Dashboard",
+      destination: "/",
+    },
+    {
+      label: "Customization",
+      destination: "/customization",
+    },
+    {
+      label: "Agent Config",
+      destination: "/config",
+    },
+    {
+      label: "Testing",
+      destination: "/test",
+    },
+    {
+      label: "Conversation",
+      destination: "/conversation",
+    },
+  ])
   useEffect(() => {
     if (!isReady) return;
 
@@ -60,6 +82,20 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
       setAppBridgeError("Failed to configure App Bridge");
     }
   }, [isReady]);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const randomId = Math.random().toString(36).substring(2, 8);
+      setNavLinks((prev) => [
+        ...prev,
+        {
+          label: `Random ${randomId}`,
+          destination: `/random-${randomId}`,
+        },
+      ]);
+    }, 30000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   if (!isEmbedded) {
     return <BrowserRouter>{children}</BrowserRouter>;
   }
@@ -69,40 +105,18 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   if (!appBridgeConfig) {
     return <AppBridgeErrorContainer />;
   }
-
   return (
-    <BrowserRouter>
-      <AppBridgeProvider config={appBridgeConfig}>
-        <NavigationMenu
-          navigationLinks={[
-            {
-              label: "Dashboard",
-              destination: "/",
-            },
-            {
-              label: "Customization",
-              destination: "/customization",
-            },
-            {
-              label: "Agent Config",
-              destination: "/config",
-            },
-            {
-              label: "Testing",
-              destination: "/test",
-            },
-            {
-              label: "Conversation",
-              destination: "/conversation",
-            },
-          ]}
-          matcher={(link, location) =>
-            link.destination === (location as any)?.pathname
-          }
-        />
-        {children}
-      </AppBridgeProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+        <AppBridgeProvider config={appBridgeConfig}>
+          <NavigationMenu
+              navigationLinks={navLinks}
+              matcher={(link, location) =>
+                  link.destination === (location as any)?.pathname
+              }
+          />
+          {children}
+        </AppBridgeProvider>
+      </BrowserRouter>
   );
 };
 export default ShopifyProvider;
