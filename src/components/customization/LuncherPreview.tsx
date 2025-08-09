@@ -10,7 +10,7 @@ export default function LuncherPreview({ form, previewTab }: any) {
   return (
     <div>
       <div
-        className={`relative flex items-end ${
+        className={`relative flex items-end !mb-0 ${
           previewTab === "web"
             ? "w-full aspect-[1] md:aspect-[1.37]"
             : "w-[318px] mx-auto aspect-[0.65]"
