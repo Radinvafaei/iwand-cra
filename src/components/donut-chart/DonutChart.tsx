@@ -23,7 +23,7 @@ const DonutChart: FC<DonutUsageChartProps> = ({ title, data, maxValue }) => {
           <Text variant="headingMd" as="h3">
             {title}
           </Text>
-          <Button icon={MagicIcon} variant="primary" size="large">
+          <Button disabled icon={MagicIcon} variant="primary" size="large">
             Upgrade
           </Button>
         </InlineStack>

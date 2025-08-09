@@ -17,11 +17,12 @@ import { InsightsComponent } from 'src/components/insights-component';
 import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
-import { useGetAgentUsage } from "src/service/hooks";
+import {useConversationUsage, useGetAgentUsage} from "src/service/hooks";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
   const { data } = useGetAgentUsage(shopName || 'test');
+    const conversationUsage = useConversationUsage(shopName || 'test');
   const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
       return { chartData: [], chartAgents: [] };
@@ -128,7 +129,6 @@ const DashboardPage = () => {
                     <Text as="h2" variant="headingLg">
                       Your AI Stylist is under launch
                     </Text>
-
                     <InlineStack gap="400" align="start">
                       <AiStyleCard
                           title="AI Stylist"
@@ -156,22 +156,19 @@ const DashboardPage = () => {
                   </BlockStack>
                 </Box>
               </Card>
-
-              <Box paddingBlockStart="600">
+              {/*<Box paddingBlockStart="600">
                 <InsightsComponent shop={shopName || ''} />
-              </Box>
-
+              </Box>*/}
               <Box paddingBlockStart="600">
                 <Layout>
-                  <Layout.Section variant="oneHalf">
+                  {/*<Layout.Section variant="oneHalf">
                     <AgentsUsageChart
                         data={chartData}
                         agents={chartAgents}
                         onDateRangeChange={handleDateRangeChange}
                         onAgentFilterChange={handleAgentFilterChange}
                     />
-                  </Layout.Section>
-
+                  </Layout.Section>*/}
                   <Layout.Section variant="oneThird">
                     <DonutChart
                         title="Conversation Usage"
