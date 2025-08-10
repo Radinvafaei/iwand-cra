@@ -7,7 +7,8 @@ import AgentConfigPage from "src/components/pages/agent-config";
 import ConversationPage from "src/components/pages/conversation";
 import TestingPage from "src/components/pages/testing";
 import Providers from "src/providers/Providers";
-import CustomizationPage from "./components/pages/CustomizationPage";
+import CustomizationPage from "src/components/pages/CustomizationPage";
+import Plans from "src/components/pages/Plans/Plans";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/conversation" element={<ConversationPage />} />
         <Route path="/test" element={<TestingPage />} />
         <Route path="/customization" element={<CustomizationPage />} />
+        <Route path="/plans" element={<Plans />} />
       </Routes>
     </Providers>
   );

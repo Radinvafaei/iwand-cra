@@ -7,12 +7,12 @@ import QueryProvider from "./QueryProvider";
 const Providers: FC<PropsWithChildren> = ({
   children,
 }) => (
-    <ShopifyProvider>
-        <QueryProvider>
-          <PolarisProviders>
-            {children}
-          </PolarisProviders>
-        </QueryProvider>
-    </ShopifyProvider>
+    <QueryProvider>
+        <ShopifyProvider>
+            <PolarisProviders>
+                {children}
+            </PolarisProviders>
+        </ShopifyProvider>
+    </QueryProvider>
 );
 export default Providers;
