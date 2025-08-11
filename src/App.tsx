@@ -5,11 +5,10 @@ import "./App.css";
 import Providers from "src/providers/Providers";
 import RoutesComponent from "./components/RoutesComponent/RoutesComponent";
 
-
 function App() {
   return (
     <Providers>
-      <RoutesComponent />
+        <RoutesComponent />
     </Providers>
   );
 }

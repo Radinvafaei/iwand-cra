@@ -21,9 +21,9 @@ import {useConversationUsage, useGetAgentUsage} from "src/service/hooks";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
-  const { data } = useGetAgentUsage(shopName || 'test');
-    const conversationUsage = useConversationUsage(shopName || 'test');
-  const { chartData, chartAgents } = useMemo(() => {
+  // const { data } = useGetAgentUsage(shopName || 'test');
+  const conversationUsage = useConversationUsage(shopName || 'test');
+ /* const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
       return { chartData: [], chartAgents: [] };
     }
@@ -83,14 +83,9 @@ const DashboardPage = () => {
 
   const handleAgentFilterChange = (selectedAgentIds: string[]) => {
     console.log('Selected agents:', selectedAgentIds);
-  };
+  };*/
 
   const handleTestClick = () => console.log('Mock test clicked');
-
-  const donutChartData = [
-    { name: 'Used', value: 1980 },
-    { name: 'Remaining', value: 20 },
-  ];
 
   return (
       <>

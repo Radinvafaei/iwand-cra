@@ -7,7 +7,7 @@ import {
 } from "@shopify/app-bridge-react";
 import AppBridgeError from "../components/ErrorComponents/AppBridgeError";
 import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConfigError";
-import {useGetActiveTabs} from "../service/hooks";
+import {useGetActiveTabs, useShowPlans} from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
 import {Tabs} from "../service/interface";
 import {NavigationLink} from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
@@ -35,19 +35,20 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
   const { data } = useGetActiveTabs(name as string);
+  const { data: showPlans } = useShowPlans(name || 'wand-test-store');
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
   useEffect(() => {
-    if(data?.data?.active_tabs){
-      setNavigationLinks(() => {
-        return data.data.active_tabs.map(tab => ({
-          label: tab as unknown as string,
-          destination: linkDictionary[tab]
-        }))
-      })
+    if(showPlans?.data?.subscription_active){
+      if(data?.data?.active_tabs){
+        setNavigationLinks(() => {
+          return data.data.active_tabs.map(tab => ({
+            label: tab as unknown as string,
+            destination: linkDictionary[tab]
+          }))
+        })
+      }
     }
-  }, [data?.data?.active_tabs]);
-  console.log({data});
-  console.log({navigationLinks});
+  }, [data?.data?.active_tabs, showPlans?.data]);
   useEffect(() => {
     if (!isReady) return;
 

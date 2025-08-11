@@ -403,3 +403,9 @@ export interface IGetProductsProcessed {
     shop: string,
     all_products_processed: boolean
 }
+
+export interface IGetShowPlansResponse {
+    shop: string,
+    subscription_active: boolean,
+    subscription_status: string
+}

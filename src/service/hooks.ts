@@ -12,7 +12,7 @@ import {
     IGetAgentConfigResponse,
     IPostAgentConfigTogglePayload,
     IPostAgentConfigToggleWidgetPayload,
-    IGetActiveTabsResponse, IGetPlansLinkResponse, IGetProductsProcessed
+    IGetActiveTabsResponse, IGetPlansLinkResponse, IGetProductsProcessed, IGetShowPlansResponse
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -112,4 +112,13 @@ export const useGetProductsProcessed = (shop: string) => useQuery<AxiosResponse<
     }),
     refetchInterval: 60_000,
     queryKey: ['products-processed', shop],
+})
+
+export const useShowPlans = (shop: string) => useQuery<AxiosResponse<IGetShowPlansResponse>>({
+    queryFn: async () => httpClient.request({
+        method: "GET",
+        url: `/show-plans`,
+        params: {shop},
+    }),
+    queryKey: ['show-plans', shop],
 })
