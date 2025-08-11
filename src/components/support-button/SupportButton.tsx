@@ -62,10 +62,11 @@ const SupportButton = () => {
                 >
                   <WhatsappIcon />
                 </div>
-
-                <Text as="h3" variant="headingSm" tone="base">
-                  +971223455566
-                </Text>
+                <a href="wa.me/971552079860">
+                  <Text as="h3" variant="headingSm" tone="base">
+                    +971223455566
+                  </Text>
+                </a>
               </InlineStack>
             </div>
 
@@ -90,9 +91,11 @@ const SupportButton = () => {
                   <GMeetIcon />
                 </div>
                 <BlockStack gap="050">
-                  <Text as="h3" variant="headingSm" tone="base">
-                    Schedule a meeting
-                  </Text>
+                  <a href="https://calendly.com/iwandstyle/shopify-support">
+                    <Text as="h3" variant="headingSm" tone="base">
+                      Schedule a meeting
+                    </Text>
+                  </a>
                 </BlockStack>
               </InlineStack>
             </div>
@@ -117,14 +120,16 @@ const SupportButton = () => {
                 >
                   <GMailIcon />
                 </div>
-                <Text
-                  alignment="center"
-                  as="h3"
-                  variant="headingSm"
-                  tone="base"
-                >
-                  Send an email
-                </Text>
+                <a href="mailto:iwandstyle@gmail.com">
+                  <Text
+                      alignment="center"
+                      as="h3"
+                      variant="headingSm"
+                      tone="base"
+                  >
+                    Send an email
+                  </Text>
+                </a>
               </InlineStack>
             </div>
           </Card>

@@ -373,3 +373,28 @@ export interface IPostAgentConfigToggleWidgetPayload {
     shop: string;
     action: 'activate' | 'deactivate';
 }
+
+export interface IGetActiveTabsResponse {
+    "success": true,
+    "shop_domain": "wand-test-store.myshopify.com",
+    "active_tabs": Tabs[],
+    "subscription_status": "inactive",
+    "processing_status": "completed",
+    "is_published": true
+}
+
+export enum Tabs {
+    Dashboard,
+    Customization,
+    "Agent Config",
+    Testing,
+    Conversation,
+    Plans
+}
+
+export interface IGetPlansLinkResponse {
+    "success": boolean,
+    "message": string,
+    "plans_url": string,
+    "shop_domain": string,
+}

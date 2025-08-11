@@ -170,11 +170,11 @@ const DashboardPage = () => {
                     />
                   </Layout.Section>*/}
                   <Layout.Section variant="oneThird">
-                    <DonutChart
-                        title="Conversation Usage"
-                        data={donutChartData}
-                        maxValue={2000}
-                    />
+                    {conversationUsage?.data?.data &&
+                        <DonutChart
+                          {...conversationUsage?.data?.data}
+                        />
+                    }
                   </Layout.Section>
                 </Layout>
               </Box>
