@@ -3,6 +3,7 @@ import "@shopify/polaris/build/esm/styles.css";
 import "./App.css";
 
 import Providers from "src/providers/Providers";
+import RoutesComponent from "./components/RoutesComponent/RoutesComponent";
 
 
 function App() {
