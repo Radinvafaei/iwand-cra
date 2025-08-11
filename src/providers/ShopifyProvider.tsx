@@ -38,21 +38,12 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
   useEffect(() => {
     if(data?.data?.active_tabs){
-      if(data.data.active_tabs.length === 1 && data.data.active_tabs[0] === Tabs['Plans']){
-        setNavigationLinks(() => {
-          return [{
-            label: 'Plans',
-            destination: '/plans'
-          }]
-        })
-      } else {
-        setNavigationLinks(() => {
-          return data.data.active_tabs.map(tab => ({
-            label: tab as unknown as string,
-            destination: linkDictionary[tab]
-          }))
-        })
-      }
+      setNavigationLinks(() => {
+        return data.data.active_tabs.map(tab => ({
+          label: tab as unknown as string,
+          destination: linkDictionary[tab]
+        }))
+      })
     }
   }, [data?.data?.active_tabs]);
   console.log({data});
