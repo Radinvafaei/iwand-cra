@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   Card,
   Text,
@@ -10,19 +10,18 @@ import {
   Box,
   Page,
 } from '@shopify/polaris';
-import { AgentsUsageChart } from 'src/components/agent-usage-chart';
 import { DonutChart } from 'src/components/donut-chart';
 import SupportButton from 'src/components/support-button/SupportButton';
-import { InsightsComponent } from 'src/components/insights-component';
 import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
-import {useConversationUsage, useGetAgentUsage} from "src/service/hooks";
+import {useConversationUsage, useGetProductsProcessed} from "src/service/hooks";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
   // const { data } = useGetAgentUsage(shopName || 'test');
-  const conversationUsage = useConversationUsage(shopName || 'test');
+  const conversationUsage = useConversationUsage(shopName!);
+  const productsProcessed = useGetProductsProcessed(shopName!);
  /* const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
       return { chartData: [], chartAgents: [] };
@@ -122,26 +121,26 @@ const DashboardPage = () => {
                 <Box padding="600">
                   <BlockStack gap="400">
                     <Text as="h2" variant="headingLg">
-                      Your AI Stylist is under launch
+                      {productsProcessed.data?.data?.all_products_processed ? 'Your AI Stylist is ready' : 'Your AI Stylist is under launch'}
                     </Text>
                     <InlineStack gap="400" align="start">
                       <AiStyleCard
                           title="AI Stylist"
-                          status="in-progress"
+                          status={productsProcessed.data?.data?.all_products_processed ? 'completed' : 'in-progress'}
                           buttonText="Test it"
                           progressMessage="in progress"
                           subtitle="Product information is gathering"
                           onButtonClick={handleTestClick}
                       />
                       <BaseCard
-                          completed={false}
+                          completed={productsProcessed.data?.data?.all_products_processed}
                           title="Customization"
                           completedMessage="completed!"
                           buttonText="Check it"
                           onButtonClick={handleTestClick}
                       />
                       <BaseCard
-                          completed
+                          completed={productsProcessed.data?.data?.all_products_processed}
                           title="Widget state"
                           completedMessage="completed!"
                           buttonText="Launch"

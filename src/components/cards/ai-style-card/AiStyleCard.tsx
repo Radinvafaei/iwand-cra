@@ -11,6 +11,8 @@ import {
   Divider,
 } from '@shopify/polaris';
 import { CheckIcon } from '@shopify/polaris-icons';
+import {useGetProductsProcessed} from "src/service/hooks";
+import useGetShopName from "src/hooks/useGetShopName";
 
 const AiStyleCard: FC<AiStyleCardProps> = ({
   title,
