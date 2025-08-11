@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import {IConfig, IShopifySidebarLink, linkDictionary} from "./interface";
+import {IConfig, linkDictionary} from "./interface";
 import { BrowserRouter } from "react-router-dom";
 import {
   Provider as AppBridgeProvider,
