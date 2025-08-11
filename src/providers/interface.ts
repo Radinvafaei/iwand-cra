@@ -11,11 +11,11 @@ export interface IShopifySidebarLink {
   destination: string,
 }
 
-export const linkDictionary: Record<Tabs, string> = {
-  [Tabs.Dashboard]: '/',
-  [Tabs.Plans]: '/plans',
-  [Tabs.Customization]: '/customization',
-  [Tabs["Agent Config"]]: '/config',
-  [Tabs.Testing]: '/test',
-  [Tabs.Conversation]: '/conversation'
+export const linkDictionary: Record<string, string> = {
+  "Dashboard": '/',
+  "Plans": '/plans',
+  "Customization": '/customization',
+  "Agent Config": '/config',
+  "Testing": '/test',
+  "Conversation": '/conversation'
 }

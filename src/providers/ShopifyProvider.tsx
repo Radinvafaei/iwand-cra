@@ -47,7 +47,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [data?.data?.active_tabs]);
   console.log({data});
-  console.log({navigationLinks});
+  console.log({navigationLinks, linkDictionary});
   useEffect(() => {
     if (!isReady) return;
 
