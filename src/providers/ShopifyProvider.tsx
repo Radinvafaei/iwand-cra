@@ -34,7 +34,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
-  const { data } = useGetActiveTabs(name || 'wand-test-shop');
+  const { data } = useGetActiveTabs(name as string);
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
   useEffect(() => {
     if(data?.data?.active_tabs){
@@ -42,7 +42,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
         setNavigationLinks(() => {
           return [{
             label: 'Plans',
-            destination: '/'
+            destination: '/plans'
           }]
         })
       } else {
