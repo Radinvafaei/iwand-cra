@@ -31,6 +31,7 @@ const RoutesComponent: FC = () => {
             <Route path="/conversation" element={<ConversationPage />} />
             <Route path="/test" element={<TestingPage />} />
             <Route path="/customization" element={<CustomizationPage />} />
+            <Route path="/plans" element={<Plans />} />
         </Routes>
     )
 }

@@ -2,17 +2,16 @@
 import {type FC } from 'react';
 import type {AiStyleCardProps} from './interface';
 import {
-  InlineStack,
-  BlockStack,
-  Text,
-  Icon,
-  Spinner,
-  Button,
-  Divider,
+    InlineStack,
+    BlockStack,
+    Text,
+    Icon,
+    Spinner,
+    Button,
+    Divider,
 } from '@shopify/polaris';
 import { CheckIcon } from '@shopify/polaris-icons';
-import {useGetProductsProcessed} from "src/service/hooks";
-import useGetShopName from "src/hooks/useGetShopName";
+import { Link } from 'react-router-dom';
 
 const AiStyleCard: FC<AiStyleCardProps> = ({
   title,
@@ -81,14 +80,15 @@ const AiStyleCard: FC<AiStyleCardProps> = ({
             </BlockStack>
 
             <InlineStack align="end">
-              <Button
-                external
-                onClick={onButtonClick}
-                size="large"
-                variant="primary"
-              >
-                {buttonText}
-              </Button>
+              <Link to="/testing" >
+                  <Button
+                      external
+                      size="large"
+                      variant="primary"
+                  >
+                      {buttonText}
+                  </Button>
+              </Link>
             </InlineStack>
           </>
         )}
