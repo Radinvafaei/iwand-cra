@@ -16,7 +16,7 @@ const Plans: FC = () => {
                 title="Billing Plans"
                 style={{width: "100%", height: "100%", border: 0}}
                 allow="payment *; clipboard-read; clipboard-write"
-                sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+                sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-top-navigation-by-user-activation"
             />
         </div>
     )

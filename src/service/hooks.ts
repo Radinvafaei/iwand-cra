@@ -110,5 +110,6 @@ export const useGetProductsProcessed = (shop: string) => useQuery<AxiosResponse<
         url: `/products-processed`,
         params: {shop},
     }),
+    refetchInterval: 60_000,
     queryKey: ['products-processed', shop],
 })
