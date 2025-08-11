@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import { IConfig } from "./interface";
+import {IConfig, IShopifySidebarLink, linkDictionary} from "./interface";
 import { BrowserRouter } from "react-router-dom";
 import {
   Provider as AppBridgeProvider,
@@ -7,6 +7,10 @@ import {
 } from "@shopify/app-bridge-react";
 import AppBridgeError from "../components/ErrorComponents/AppBridgeError";
 import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConfigError";
+import {useGetActiveTabs} from "../service/hooks";
+import useGetShopName from "../hooks/useGetShopName";
+import {Tabs} from "../service/interface";
+import {NavigationLink} from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
 const useEmbedding = () => {
   const [isEmbedded, setIsEmbedded] = useState(false);
@@ -29,6 +33,28 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const { isReady, isEmbedded } = useEmbedding();
   const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
   const [appBridgeError, setAppBridgeError] = useState<string>();
+  const name = useGetShopName();
+  const { data } = useGetActiveTabs(name || 'wand-test-shop');
+  const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
+  useEffect(() => {
+    if(data?.data?.active_tabs){
+      if(data.data.active_tabs.length === 1 && data.data.active_tabs[0] === Tabs['Plans']){
+        setNavigationLinks(() => {
+          return [{
+            label: 'Plans',
+            destination: '/'
+          }]
+        })
+      } else {
+        setNavigationLinks(() => {
+          return data.data.active_tabs.map(tab => ({
+            label: tab as unknown as string,
+            destination: linkDictionary[tab]
+          }))
+        })
+      }
+    }
+  }, [data?.data?.active_tabs]);
   useEffect(() => {
     if (!isReady) return;
 
@@ -74,28 +100,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
     <BrowserRouter>
       <AppBridgeProvider config={appBridgeConfig}>
         <NavigationMenu
-          navigationLinks={[
-            {
-              label: "Dashboard",
-              destination: "/",
-            },
-            {
-              label: "Customization",
-              destination: "/customization",
-            },
-            {
-              label: "Agent Config",
-              destination: "/config",
-            },
-            {
-              label: "Testing",
-              destination: "/test",
-            },
-            {
-              label: "Conversation",
-              destination: "/conversation",
-            },
-          ]}
+          navigationLinks={navigationLinks}
           matcher={(link, location) =>
             link.destination === (location as any)?.pathname
           }

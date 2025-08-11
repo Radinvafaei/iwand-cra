@@ -2,28 +2,27 @@
 import { Card, Button, Text, BlockStack, InlineStack } from '@shopify/polaris';
 import { MagicIcon } from '@shopify/polaris-icons';
 import { PieChart, Pie, Cell, ResponsiveContainer, Label } from 'recharts';
-import type {DonutUsageChartProps} from 'src/components/donut-chart/interface';
 import type {FC} from "react";
+import {IGetConversationUsageResponse} from "src/service/interface";
 
 const COLORS = ['#5C59E8', '#0000000F'];
 
-const DonutChart: FC<DonutUsageChartProps> = ({ title, data, maxValue }) => {
-  const usedValue = data.find((d) => d.name === 'Used')?.value || 0;
-  const percentage = Math.round((usedValue / maxValue) * 100);
-
-  const chartData = [
-    { name: 'Used', value: usedValue },
-    { name: 'Available', value: Math.max(0, maxValue - usedValue) },
-  ];
-
+const DonutChart: FC<IGetConversationUsageResponse> = ({ shop, usage }) => {
+    const limit = Math.max(0, usage.limit || 0);
+    const used = Math.min(usage.current || 0, limit);
+    const remaining = Math.max(0, limit - used);
+    const chartData = [
+        { name: 'Used', value: used },
+        { name: 'Remaining', value: remaining },
+    ];
   return (
     <Card roundedAbove="sm">
       <BlockStack>
         <InlineStack align="space-between" blockAlign="center">
           <Text variant="headingMd" as="h3">
-            {title}
+            Conversation Usage
           </Text>
-          <Button icon={MagicIcon} variant="primary" size="large">
+          <Button disabled icon={MagicIcon} variant="primary" size="large">
             Upgrade
           </Button>
         </InlineStack>
@@ -47,7 +46,7 @@ const DonutChart: FC<DonutUsageChartProps> = ({ title, data, maxValue }) => {
                 cy="50%"
                 innerRadius={60}
                 outerRadius={80}
-                paddingAngle={usedValue === maxValue ? 0 : 1}
+                paddingAngle={usage.current === usage.limit ? 0 : 1}
                 dataKey="value"
                 startAngle={90}
                 endAngle={450}
@@ -59,7 +58,7 @@ const DonutChart: FC<DonutUsageChartProps> = ({ title, data, maxValue }) => {
                   />
                 ))}
                 <Label
-                  value={`${percentage}%`}
+                  value={`${usage.percentage}%`}
                   position="center"
                   dy={-10}
                   fill="#495057"
@@ -67,7 +66,7 @@ const DonutChart: FC<DonutUsageChartProps> = ({ title, data, maxValue }) => {
                   fontWeight="semibold"
                 />
                 <Label
-                  value={`${usedValue} of ${maxValue}`}
+                  value={`${usage.current} of ${usage.limit}`}
                   position="center"
                   dy={15}
                   fill="#666"

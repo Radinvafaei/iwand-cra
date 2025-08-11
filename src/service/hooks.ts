@@ -11,7 +11,8 @@ import {
     IGetAnalyticsResponse,
     IGetAgentConfigResponse,
     IPostAgentConfigTogglePayload,
-    IPostAgentConfigToggleWidgetPayload
+    IPostAgentConfigToggleWidgetPayload,
+    IGetActiveTabsResponse, IGetPlansLinkResponse
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -83,4 +84,22 @@ export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidge
         url: '/agents-config/widget-toggle',
         data
     })
+})
+
+export const useGetActiveTabs = (name: string) => useQuery<AxiosResponse<IGetActiveTabsResponse>>({
+    queryFn: async () => httpClient.request({
+        method: 'GET',
+        url: '/shop/active-tabs',
+        params: {name},
+    }),
+    queryKey: ['active_tabs', name],
+})
+
+export const useGetPlansLink = (name: string) => useQuery<AxiosResponse<IGetPlansLinkResponse>>({
+    queryFn: async () => httpClient.request({
+        method: "GET",
+        url: `/mantle/plans-url`,
+        params: {name},
+    }),
+    queryKey: ['plans', name],
 })
