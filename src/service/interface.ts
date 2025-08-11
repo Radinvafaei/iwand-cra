@@ -393,8 +393,13 @@ export enum Tabs {
 }
 
 export interface IGetPlansLinkResponse {
-    "success": boolean,
-    "message": string,
-    "plans_url": string,
-    "shop_domain": string,
+    success: boolean,
+    message: string,
+    plans_url: string,
+    shop_domain: string,
+}
+
+export interface IGetProductsProcessed {
+    shop: string,
+    all_products_processed: boolean
 }

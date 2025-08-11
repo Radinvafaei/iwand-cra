@@ -12,7 +12,7 @@ import {
     IGetAgentConfigResponse,
     IPostAgentConfigTogglePayload,
     IPostAgentConfigToggleWidgetPayload,
-    IGetActiveTabsResponse, IGetPlansLinkResponse
+    IGetActiveTabsResponse, IGetPlansLinkResponse, IGetProductsProcessed
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -86,20 +86,29 @@ export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidge
     })
 })
 
-export const useGetActiveTabs = (name: string) => useQuery<AxiosResponse<IGetActiveTabsResponse>>({
+export const useGetActiveTabs = (shop: string) => useQuery<AxiosResponse<IGetActiveTabsResponse>>({
     queryFn: async () => httpClient.request({
         method: 'GET',
         url: '/shop/active-tabs',
-        params: {name},
+        params: {shop},
     }),
-    queryKey: ['active_tabs', name],
+    queryKey: ['active_tabs', shop],
 })
 
-export const useGetPlansLink = (name: string) => useQuery<AxiosResponse<IGetPlansLinkResponse>>({
+export const useGetPlansLink = (shop: string) => useQuery<AxiosResponse<IGetPlansLinkResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: `/mantle/plans-url`,
-        params: {name},
+        params: {shop},
     }),
-    queryKey: ['plans', name],
+    queryKey: ['plans', shop],
+});
+
+export const useGetProductsProcessed = (shop: string) => useQuery<AxiosResponse<IGetProductsProcessed>>({
+    queryFn: async () => httpClient.request({
+        method: "GET",
+        url: `/products-processed`,
+        params: {shop},
+    }),
+    queryKey: ['products-processed', shop],
 })
