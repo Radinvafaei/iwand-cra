@@ -34,6 +34,9 @@ const RoutesComponent: FC = () => {
             }
         }
     }, [data?.data, isLoading]);
+    if(!data?.data){
+        return <Spinner accessibilityLabel="Spinner example" size="large" />
+    }
     return (
         <Routes>
             {root}
