@@ -38,15 +38,9 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           label: "Customization",
           destination: "/customization",
         },{
-          label: "Agent Config",
-          destination: "/config",
-        },{
           label: "Testing",
           destination: "/test",
-        },{
-          label: "Conversation",
-          destination: "/conversation",
-        },
+        }
       ])
     }
   }, [data?.data]);

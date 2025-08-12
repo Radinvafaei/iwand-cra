@@ -19,7 +19,6 @@ const RoutesComponent: FC = () => {
             setRoot(<Route path="/" element={<Plans />} />)
         }
     }, [show_plans]);
-    console.log({ show_plans, isLoading });
     if(isLoading){
         return(
             <div className="w-full h-[100vh] flex justify-center items-center">
