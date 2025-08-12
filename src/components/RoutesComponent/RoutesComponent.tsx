@@ -12,8 +12,15 @@ import {Spinner} from "@shopify/polaris";
 
 const RoutesComponent: FC = () => {
     const name = useGetShopName()
-    const { data, isLoading } = useShowPlans(name || 'wand-test-store');
-    const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />)
+    const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />);
+    const [enabled, setEnabled] = useState(false);
+    const { data, isLoading } = useShowPlans(name!, enabled);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setEnabled(true);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
     useEffect(() => {
         if(isLoading){
             setRoot(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />)

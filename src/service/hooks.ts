@@ -114,11 +114,12 @@ export const useGetProductsProcessed = (shop: string) => useQuery<AxiosResponse<
     queryKey: ['products-processed', shop],
 })
 
-export const useShowPlans = (shop: string) => useQuery<AxiosResponse<IGetShowPlansResponse>>({
+export const useShowPlans = (shop: string, enabled: boolean) => useQuery<AxiosResponse<IGetShowPlansResponse>>({
     queryFn: async () => httpClient.request({
         method: "GET",
         url: `/show-plans`,
         params: {shop},
     }),
+    enabled,
     queryKey: ['show-plans', shop],
 })
