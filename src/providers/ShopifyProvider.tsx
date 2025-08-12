@@ -9,13 +9,11 @@ import AppBridgeError from "../components/ErrorComponents/AppBridgeError";
 import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConfigError";
 import {useGetActiveTabs, useShowPlans} from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
-import {Tabs} from "../service/interface";
 import {NavigationLink} from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
 const useEmbedding = () => {
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [isReady, setIsReady] = useState(false);
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const shop = urlParams.get("shop");
@@ -35,8 +33,15 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
   const { data } = useGetActiveTabs(name as string);
-  const { data: showPlans } = useShowPlans(name || 'wand-test-store');
+  const [enabled, setEnabled] = useState(false);
+  const { data: showPlans } = useShowPlans(name!, enabled);
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEnabled(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
   useEffect(() => {
     if(showPlans?.data?.subscription_active){
       if(data?.data?.active_tabs){
