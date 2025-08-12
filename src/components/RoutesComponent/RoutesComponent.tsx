@@ -11,21 +11,22 @@ import {useShowPlansManager} from "src/providers/ShopifyProvider";
 
 const RoutesComponent: FC = () => {
     const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<div className="w-full h-[100vh] flex justify-center items-center"><Spinner accessibilityLabel="Spinner example" size="large" /></div>} />);
-    const { show_plans, isLoading } = useShowPlansManager()
-    useEffect(() => {
+    const hook = useShowPlansManager();
+    /*useEffect(() => {
         if(show_plans){
             setRoot(<Route path="/" element={<DashboardPage />} />)
         } else {
             setRoot(<Route path="/" element={<Plans />} />)
         }
-    }, [show_plans]);
-    if(isLoading){
+    }, [show_plans]);*/
+    console.log({ hook });
+    /*if(isLoading){
         return(
             <div className="w-full h-[100vh] flex justify-center items-center">
                 <Spinner accessibilityLabel="Spinner example" size="large" />
             </div>
         )
-    }
+    }*/
     return (
         <Routes>
             {root}
