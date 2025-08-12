@@ -22,11 +22,11 @@ const RoutesComponent: FC = () => {
     }, [show_plans]);
     useEffect(() => {
         let intervalId: NodeJS.Timer
-        if(shouldRefetch && !show_plans){
+        if(shouldRefetch){
             intervalId = setInterval(() => {
                 const params = new URLSearchParams(window.location.search);
                 const chargeId = params.get("charge_id");
-                if(chargeId){
+                if(chargeId && !show_plans){
                     setShouldRefetch(true);
                     plans_refetch();
                 } else {
