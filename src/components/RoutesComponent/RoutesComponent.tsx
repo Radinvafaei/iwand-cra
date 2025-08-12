@@ -12,17 +12,21 @@ import {Spinner} from "@shopify/polaris";
 
 const RoutesComponent: FC = () => {
     const name = useGetShopName()
-    const { data } = useShowPlans(name || 'wand-test-store');
+    const { data, isLoading } = useShowPlans(name || 'wand-test-store');
     const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />)
     useEffect(() => {
-        if(data?.data){
-            if(data.data.subscription_active){
-                setRoot(<Route path="/" element={<DashboardPage />} />)
-            } else {
-                setRoot(<Route path="/" element={<Plans />} />)
+        if(isLoading){
+            setRoot(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />)
+        } else {
+            if(data?.data){
+                if(data.data.subscription_active){
+                    setRoot(<Route path="/" element={<DashboardPage />} />)
+                } else {
+                    setRoot(<Route path="/" element={<Plans />} />)
+                }
             }
         }
-    }, [data?.data]);
+    }, [data?.data, isLoading]);
     return (
         <Routes>
             {root}
