@@ -6,7 +6,7 @@ import DashboardPage from "src/components/pages/dashboard";
 import AgentConfigPage from "src/components/pages/agent-config";
 import ConversationPage from "src/components/pages/conversation";
 import TestingPage from "src/components/pages/testing";
-import {Spinner} from "@shopify/polaris";
+import {Spinner, Text} from "@shopify/polaris";
 import {useShowPlansManager} from "src/providers/ShopifyProvider";
 
 const RoutesComponent: FC = () => {
@@ -40,6 +40,8 @@ const RoutesComponent: FC = () => {
         return(
             <div className="w-full h-[100vh] flex justify-center items-center">
                 <Spinner accessibilityLabel="Spinner example" size="large" />
+                <Text as="h2">Approval in Progress</Text>
+                <Text as="p">Your request has been received and is being reviewed. This usually takes a few moments—once approved, you’ll be all set to continue.</Text>
             </div>
         )
     }
