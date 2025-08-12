@@ -21,17 +21,8 @@ const RoutesComponent: FC = () => {
         }
     }, [show_plans]);
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const chargeId = params.get("charge_id");
-        if(chargeId){
-            setShouldRefetch(true);
-        } else {
-            setShouldRefetch(false);
-        }
-    }, []);
-    useEffect(() => {
         let intervalId: NodeJS.Timer
-        if(shouldRefetch){
+        if(shouldRefetch && !show_plans){
             intervalId = setInterval(() => {
                 const params = new URLSearchParams(window.location.search);
                 const chargeId = params.get("charge_id");
@@ -44,7 +35,7 @@ const RoutesComponent: FC = () => {
             }, 1000);
         }
         return () => clearInterval(intervalId);
-    }, [shouldRefetch]);
+    }, [shouldRefetch, show_plans]);
     if(isLoading || shouldRefetch){
         return(
             <div className="w-full h-[100vh] flex justify-center items-center">
