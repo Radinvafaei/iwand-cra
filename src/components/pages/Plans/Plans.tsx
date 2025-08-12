@@ -9,27 +9,15 @@ const Plans: FC = () => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
-        const iframe = iframeRef.current;
-        if (!iframe) return;
-
-        try {
-            console.log("Iframe element:", iframe);
-            console.log("Iframe src:", iframe.src);
-            if (iframe.contentWindow) {
-                console.log("Iframe contentWindow موجود هست", iframe.contentWindow);
-
-                try {
-                    console.log(
-                        "Iframe document:",
-                        iframe.contentWindow.document // احتمالاً خطای security
-                    );
-                } catch (err) {
-                    console.error("❌ دسترسی به document داخل iframe مسدود شد:", err);
-                }
-            }
-        } catch (error) {
-            console.error("خطا در خواندن iframe:", error);
+        function handleMessage(event: any) {
+            console.log("Received message:", event.data);
         }
+
+        window.addEventListener("message", handleMessage);
+
+        return () => {
+            window.removeEventListener("message", handleMessage);
+        };
     }, []);
     if(!data?.data){
         return <Spinner accessibilityLabel="Spinner example" size="large" />;
