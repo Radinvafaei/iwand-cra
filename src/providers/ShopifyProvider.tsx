@@ -1,5 +1,5 @@
 import {createContext, FC, PropsWithChildren, useContext, useEffect, useState} from "react";
-import {IConfig, IShowPlansManagerContext, linkDictionary} from "./interface";
+import {IConfig, IShowPlansManagerContext} from "./interface";
 import { BrowserRouter } from "react-router-dom";
 import {
   Provider as AppBridgeProvider,
@@ -21,22 +21,35 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
-  const { data } = useGetActiveTabs(name as string);
-  const { data: showPlans, refetch } = useShowPlans(name!);
+  const { refetch: active_tabs_refetch } = useGetActiveTabs(name as string);
+  const { data, refetch: plans_refetch, isLoading } = useShowPlans(name!);
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
 
   useEffect(() => {
-    if(showPlans?.data?.subscription_active){
-      if(data?.data?.active_tabs){
-        setNavigationLinks(() => {
-          return data.data.active_tabs.map(tab => ({
-            label: tab as unknown as string,
-            destination: linkDictionary[tab]
-          }))
-        })
-      }
+    if(data?.data?.subscription_active){
+      setNavigationLinks([
+        {
+          label: "Dashboard",
+          destination: "/",
+        },{
+          label: "Plans",
+          destination: "/plans",
+        },{
+          label: "Customization",
+          destination: "/customization",
+        },{
+          label: "Agent Config",
+          destination: "/config",
+        },{
+          label: "Testing",
+          destination: "/test",
+        },{
+          label: "Conversation",
+          destination: "/conversation",
+        },
+      ])
     }
-  }, [data?.data?.active_tabs, showPlans?.data]);
+  }, [data?.data]);
   useEffect(() => {
     if (!isReady) return;
 
@@ -87,7 +100,14 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
             link.destination === (location as any)?.pathname
           }
         />
-        <ShowPlansManager value={{ showPlans: !!showPlans?.data?.subscription_active, refetch}}>
+        <ShowPlansManager
+          value={{
+            show_plans: !!data?.data?.subscription_active,
+            isLoading,
+            plans_refetch,
+            active_tabs_refetch
+          }}
+        >
           {children}
         </ShowPlansManager>
       </AppBridgeProvider>

@@ -1,26 +1,12 @@
-import {Tabs} from "src/service/interface";
-
 export interface IConfig {
   apiKey: string,
   host: string,
   forceRedirect: boolean,
 }
 
-export interface IShopifySidebarLink {
-  label: Tabs,
-  destination: string,
-}
-
-export const linkDictionary: Record<string, string> = {
-  "Dashboard": '/',
-  "Plans": '/plans',
-  "Customization": '/customization',
-  "Agent Config": '/config',
-  "Testing": '/test',
-  "Conversation": '/conversation'
-}
-
 export interface IShowPlansManagerContext {
-  showPlans: boolean,
-  refetch: Function
+  show_plans: boolean;
+  plans_refetch: Function;
+  active_tabs_refetch: Function;
+  isLoading: boolean;
 }

@@ -6,29 +6,25 @@ import DashboardPage from "src/components/pages/dashboard";
 import AgentConfigPage from "src/components/pages/agent-config";
 import ConversationPage from "src/components/pages/conversation";
 import TestingPage from "src/components/pages/testing";
-import {useShowPlans} from "src/service/hooks";
-import useGetShopName from "src/hooks/useGetShopName";
 import {Spinner} from "@shopify/polaris";
+import {useShowPlansManager} from "src/providers/ShopifyProvider";
 
 const RoutesComponent: FC = () => {
-    const name = useGetShopName()
-    const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />);
-    const { data, isLoading } = useShowPlans(name!);
+    const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<div className="w-full h-[100vh] flex justify-center items-center"><Spinner accessibilityLabel="Spinner example" size="large" /></div>} />);
+    const { show_plans, isLoading } = useShowPlansManager()
     useEffect(() => {
-        if(isLoading){
-            setRoot(<Route path="/" element={<Spinner accessibilityLabel="Spinner example" size="large" />} />)
+        if(show_plans){
+            setRoot(<Route path="/" element={<DashboardPage />} />)
         } else {
-            if(data?.data){
-                if(data.data.subscription_active){
-                    setRoot(<Route path="/" element={<DashboardPage />} />)
-                } else {
-                    setRoot(<Route path="/" element={<Plans />} />)
-                }
-            }
+            setRoot(<Route path="/" element={<Plans />} />)
         }
-    }, [data?.data, isLoading]);
-    if(!data?.data){
-        return <Spinner accessibilityLabel="Spinner example" size="large" />
+    }, [show_plans]);
+    if(isLoading){
+        return(
+            <div className="w-full h-[100vh] flex justify-center items-center">
+                <Spinner accessibilityLabel="Spinner example" size="large" />
+            </div>
+        )
     }
     return (
         <Routes>
