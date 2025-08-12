@@ -19,3 +19,8 @@ export const linkDictionary: Record<string, string> = {
   "Testing": '/test',
   "Conversation": '/conversation'
 }
+
+export interface IShowPlansManagerContext {
+  showPlans: boolean,
+  refetch: Function
+}

@@ -1,5 +1,5 @@
-import { FC, PropsWithChildren, useEffect, useState } from "react";
-import {IConfig, linkDictionary} from "./interface";
+import {createContext, FC, PropsWithChildren, useContext, useEffect, useState} from "react";
+import {IConfig, IShowPlansManagerContext, linkDictionary} from "./interface";
 import { BrowserRouter } from "react-router-dom";
 import {
   Provider as AppBridgeProvider,
@@ -10,22 +10,11 @@ import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConf
 import {useGetActiveTabs, useShowPlans} from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
 import {NavigationLink} from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
+import useEmbedding from "./useEmbedding";
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
-const useEmbedding = () => {
-  const [isEmbedded, setIsEmbedded] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const shop = urlParams.get("shop");
-    const embedded = urlParams.get("embedded") === "1";
-    const inIframe = window.top !== window.self;
 
-    setIsEmbedded(!!(inIframe && (embedded || shop)));
-    setIsReady(true);
-  }, []);
-
-  return { isEmbedded, isReady };
-};
+const ShowPlansManager = createContext<IShowPlansManagerContext>({} as IShowPlansManagerContext);
+export const useShowPlansManager = () => useContext(ShowPlansManager);
 
 const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const { isReady, isEmbedded } = useEmbedding();
@@ -33,15 +22,9 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
   const { data } = useGetActiveTabs(name as string);
-  const [enabled, setEnabled] = useState(false);
-  const { data: showPlans } = useShowPlans(name!, enabled);
+  const { data: showPlans, refetch } = useShowPlans(name!);
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setEnabled(true);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+
   useEffect(() => {
     if(showPlans?.data?.subscription_active){
       if(data?.data?.active_tabs){
@@ -104,7 +87,9 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
             link.destination === (location as any)?.pathname
           }
         />
-        {children}
+        <ShowPlansManager value={{ showPlans: !!showPlans?.data?.subscription_active, refetch}}>
+          {children}
+        </ShowPlansManager>
       </AppBridgeProvider>
     </BrowserRouter>
   );

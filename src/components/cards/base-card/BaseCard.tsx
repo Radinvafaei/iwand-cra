@@ -3,6 +3,7 @@ import type {FC} from 'react';
 import type {BaseCardProps} from './interface';
 import { InlineStack, BlockStack, Text, Icon, Button } from '@shopify/polaris';
 import { CheckIcon } from '@shopify/polaris-icons';
+import {Link} from "react-router-dom";
 
 const BaseCard: FC<BaseCardProps> = ({
   title,
@@ -48,14 +49,16 @@ const BaseCard: FC<BaseCardProps> = ({
           </>
         )}
         <InlineStack align="end">
-          <Button
-            external
-            onClick={onButtonClick}
-            size="large"
-            variant="primary"
-          >
-            {buttonText}
-          </Button>
+          <Link to="/customization">
+              <Button
+                  external
+                  onClick={onButtonClick}
+                  size="large"
+                  variant="primary"
+              >
+                  {buttonText}
+              </Button>
+          </Link>
         </InlineStack>
       </BlockStack>
     </div>
