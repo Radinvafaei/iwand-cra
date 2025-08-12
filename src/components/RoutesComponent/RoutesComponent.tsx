@@ -11,7 +11,8 @@ import {useShowPlansManager} from "src/providers/ShopifyProvider";
 
 const RoutesComponent: FC = () => {
     const [root, setRoot] = useState<ReactNode>(<Route path="/" element={<div className="w-full h-[100vh] flex justify-center items-center"><Spinner accessibilityLabel="Spinner example" size="large" /></div>} />);
-    const {show_plans, isLoading} = useShowPlansManager();
+    const {show_plans, isLoading, plans_refetch} = useShowPlansManager();
+    const [shouldRefetch, setShouldRefetch] = useState<boolean>(false)
     useEffect(() => {
         if(show_plans){
             setRoot(<Route path="/" element={<DashboardPage />} />)
@@ -19,7 +20,32 @@ const RoutesComponent: FC = () => {
             setRoot(<Route path="/" element={<Plans />} />)
         }
     }, [show_plans]);
-    if(isLoading){
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const chargeId = params.get("charge_id");
+        if(chargeId){
+            setShouldRefetch(true);
+        } else {
+            setShouldRefetch(false);
+        }
+    }, []);
+    useEffect(() => {
+        let intervalId: NodeJS.Timer
+        if(shouldRefetch){
+            intervalId = setInterval(() => {
+                const params = new URLSearchParams(window.location.search);
+                const chargeId = params.get("charge_id");
+                if(chargeId){
+                    setShouldRefetch(true);
+                    plans_refetch();
+                } else {
+                    setShouldRefetch(false);
+                }
+            }, 1000);
+        }
+        return () => clearInterval(intervalId);
+    }, [shouldRefetch]);
+    if(isLoading || shouldRefetch){
         return(
             <div className="w-full h-[100vh] flex justify-center items-center">
                 <Spinner accessibilityLabel="Spinner example" size="large" />

@@ -24,7 +24,6 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const { refetch: active_tabs_refetch } = useGetActiveTabs(name || 'wand-test-store');
   const { data, refetch: plans_refetch, isLoading } = useShowPlans(name || 'wand-test-store');
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
-  console.log(data)
   useEffect(() => {
     if(data?.data?.subscription_active){
       setNavigationLinks([
