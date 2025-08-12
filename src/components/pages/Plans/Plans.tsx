@@ -9,22 +9,27 @@ const Plans: FC = () => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
-        function handleMessage(event: any) {
-            console.log("Received message:", event.data);
+        if(iframeRef.current){
+            iframeRef.current.contentWindow?.postMessage('requestContent', 'http://example.com');
+            window.addEventListener('message', function(event) {
+                if (event.origin === window.location.origin) {
+                    if (event.data === 'requestContent') {
+                        event.source?.postMessage(document.body.innerHTML, {
+                            targetOrigin: event.origin
+                        });
+                    }
+                }
+            });
         }
-
-        window.addEventListener("message", handleMessage);
-
-        return () => {
-            window.removeEventListener("message", handleMessage);
-        };
     }, []);
+
     if(!data?.data){
         return <Spinner accessibilityLabel="Spinner example" size="large" />;
     }
     return (
         <div style={{height: "100vh"}}>
             <iframe
+                id="myIframeId"
                 ref={iframeRef}
                 src={data.data.plans_url}
                 title="Billing Plans"
