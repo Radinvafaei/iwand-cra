@@ -21,6 +21,15 @@ const RoutesComponent: FC = () => {
         }
     }, [show_plans]);
     useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const chargeId = params.get("charge_id");
+        if(chargeId){
+            setShouldRefetch(true)
+        } else {
+            setShouldRefetch(false)
+        }
+    }, []);
+    useEffect(() => {
         let intervalId: NodeJS.Timer
         if(shouldRefetch){
             intervalId = setInterval(() => {
