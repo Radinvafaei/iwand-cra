@@ -101,6 +101,7 @@ const DashboardPage = () => {
     try {
       const {data} = await mutateAsync();
       if(data.is_published){
+        await active_tabs_refetch()
         toast.show('The app has been published');
       }
     } catch (e) {
