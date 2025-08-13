@@ -409,3 +409,15 @@ export interface IGetShowPlansResponse {
     subscription_active: boolean,
     subscription_status: string
 }
+
+export interface IPublishPayload {
+    shop: string,
+    is_published: boolean,
+}
+
+export interface IPublishResponse {
+    "shop": string,
+    "success": boolean,
+    "is_published": boolean,
+    "message": string
+}

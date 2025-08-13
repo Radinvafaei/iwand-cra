@@ -15,14 +15,16 @@ import SupportButton from 'src/components/support-button/SupportButton';
 import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
-import {useConversationUsage, useGetProductsProcessed} from "src/service/hooks";
-import {useNavigate} from "@shopify/app-bridge-react";
+import {useConversationUsage, useGetProductsProcessed, usePublish} from "src/service/hooks";
+import {useToast, useAppBridge, useNavigationHistory} from "@shopify/app-bridge-react";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
   // const { data } = useGetAgentUsage(shopName || 'test');
   const conversationUsage = useConversationUsage(shopName!);
   const productsProcessed = useGetProductsProcessed(shopName!);
+  const toast = useToast();
+  const { mutateAsync, data } = usePublish({shop: shopName!, is_published: true});
  /* const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
       return { chartData: [], chartAgents: [] };
@@ -85,8 +87,18 @@ const DashboardPage = () => {
     console.log('Selected agents:', selectedAgentIds);
   };*/
 
-  const navigate = useNavigate();
-  const handleLaunch = async () => {};
+  const {push} = useNavigationHistory();
+  const handleLaunch = async () => {
+    try {
+      const {data} = await mutateAsync();
+      if(data.is_published){
+        toast.show('The app has been published');
+      }
+    } catch (e) {
+      toast.show(`an error occurred: ${JSON.stringify(e)}`, {isError: true});
+      console.error(e);
+    }
+  };
   return (
       <>
         <div
@@ -131,17 +143,17 @@ const DashboardPage = () => {
                           buttonText="Test it"
                           progressMessage="in progress"
                           subtitle="Product information is gathering"
-                          onButtonClick={() => navigate('/test')}
+                          onButtonClick={() => push({pathname: '/testing'})}
                       />
                       <BaseCard
                           completed={productsProcessed.data?.data?.all_products_processed}
                           title="Customization"
                           completedMessage="completed!"
                           buttonText="Check it"
-                          onButtonClick={() => navigate('/customization')}
+                          onButtonClick={() => push({pathname: '/customization'})}
                       />
                       <BaseCard
-                          completed={productsProcessed.data?.data?.all_products_processed}
+                          completed={data?.data?.is_published ? !data?.data?.is_published : productsProcessed.data?.data?.all_products_processed}
                           title="Widget state"
                           completedMessage="completed!"
                           buttonText="Launch"

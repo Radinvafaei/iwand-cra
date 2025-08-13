@@ -12,7 +12,12 @@ import {
     IGetAgentConfigResponse,
     IPostAgentConfigTogglePayload,
     IPostAgentConfigToggleWidgetPayload,
-    IGetActiveTabsResponse, IGetPlansLinkResponse, IGetProductsProcessed, IGetShowPlansResponse
+    IGetActiveTabsResponse,
+    IGetPlansLinkResponse,
+    IGetProductsProcessed,
+    IGetShowPlansResponse,
+    IPublishPayload,
+    IPublishResponse
 } from "./interface";
 import {AxiosResponse} from "axios";
 
@@ -121,4 +126,13 @@ export const useShowPlans = (shop: string) => useQuery<AxiosResponse<IGetShowPla
         params: {shop},
     }),
     queryKey: ['show-plans', shop],
+})
+
+export const usePublish = (data: IPublishPayload) => useMutation<AxiosResponse<IPublishResponse>>({
+    mutationFn: async () => httpClient.request({
+        method: "POST",
+        url: `/update-publish-status`,
+        data,
+    }),
+    mutationKey: ['update-publish-status', data],
 })
