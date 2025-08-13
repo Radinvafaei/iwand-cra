@@ -16,6 +16,7 @@ import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
 import {useConversationUsage, useGetProductsProcessed} from "src/service/hooks";
+import {useNavigate} from "@shopify/app-bridge-react";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
@@ -84,8 +85,8 @@ const DashboardPage = () => {
     console.log('Selected agents:', selectedAgentIds);
   };*/
 
-  const handleTestClick = () => console.log('Mock test clicked');
-
+  const navigate = useNavigate();
+  const handleLaunch = async () => {};
   return (
       <>
         <div
@@ -130,21 +131,21 @@ const DashboardPage = () => {
                           buttonText="Test it"
                           progressMessage="in progress"
                           subtitle="Product information is gathering"
-                          onButtonClick={handleTestClick}
+                          onButtonClick={() => navigate('/test')}
                       />
                       <BaseCard
                           completed={productsProcessed.data?.data?.all_products_processed}
                           title="Customization"
                           completedMessage="completed!"
                           buttonText="Check it"
-                          onButtonClick={handleTestClick}
+                          onButtonClick={() => navigate('/customization')}
                       />
                       <BaseCard
                           completed={productsProcessed.data?.data?.all_products_processed}
                           title="Widget state"
                           completedMessage="completed!"
                           buttonText="Launch"
-                          onButtonClick={handleTestClick}
+                          onButtonClick={handleLaunch}
                       />
                     </InlineStack>
                   </BlockStack>

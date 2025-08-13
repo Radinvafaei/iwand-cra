@@ -16,11 +16,12 @@ import { MobileBrowser } from "src/components/mobile-browser";
 import { DesktopBrowser } from "src/components/desktop-browser";
 import SupportButton from "src/components/support-button/SupportButton";
 import { CongratsIcon } from "../../../icons";
+import {useShowPlansManager} from "../../../providers/ShopifyProvider";
 
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { active_tabs } = useShowPlansManager()
   const tabs = [
     {
       id: "mobile",

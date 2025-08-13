@@ -21,7 +21,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
   const [appBridgeError, setAppBridgeError] = useState<string>();
   const name = useGetShopName();
-  const { refetch: active_tabs_refetch } = useGetActiveTabs(name || 'wand-test-store');
+  const { refetch: active_tabs_refetch, data: active_tabs } = useGetActiveTabs(name || 'wand-test-store');
   const { data, refetch: plans_refetch, isLoading } = useShowPlans(name || 'wand-test-store');
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
   useEffect(() => {
@@ -96,6 +96,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
         <ShowPlansManager.Provider
           value={{
             show_plans: !!data?.data?.subscription_active,
+            active_tabs: active_tabs?.data?.active_tabs || [],
             isLoading,
             plans_refetch,
             active_tabs_refetch

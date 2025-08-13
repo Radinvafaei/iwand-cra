@@ -7,7 +7,11 @@ const Plans: FC = () => {
     const name = useGetShopName()
     const { data } = useGetPlansLink(name || 'wand-test-store');
     if(!data?.data){
-        return <Spinner accessibilityLabel="Spinner example" size="large" />;
+        return (
+            <div className="h-[100vh] w-full p-4 flex flex-col justify-center items-center">
+                <Spinner accessibilityLabel="Spinner example" size="large" />
+            </div>
+        );
     }
     return (
         <div style={{height: "100vh"}}>
@@ -24,5 +28,3 @@ const Plans: FC = () => {
 }
 
 export default Plans;
-//Current plan
-//Subscribe

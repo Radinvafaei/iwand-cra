@@ -4,6 +4,7 @@ import type {BaseCardProps} from './interface';
 import { InlineStack, BlockStack, Text, Icon, Button } from '@shopify/polaris';
 import { CheckIcon } from '@shopify/polaris-icons';
 import {Link} from "react-router-dom";
+import {useNavigationHistory} from "@shopify/app-bridge-react";
 
 const BaseCard: FC<BaseCardProps> = ({
   title,
@@ -49,8 +50,8 @@ const BaseCard: FC<BaseCardProps> = ({
           </>
         )}
         <InlineStack align="end">
-          <Link to="/customization">
               <Button
+                  disabled={!completed}
                   external
                   onClick={onButtonClick}
                   size="large"
@@ -58,7 +59,6 @@ const BaseCard: FC<BaseCardProps> = ({
               >
                   {buttonText}
               </Button>
-          </Link>
         </InlineStack>
       </BlockStack>
     </div>

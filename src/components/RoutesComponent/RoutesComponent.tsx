@@ -24,9 +24,9 @@ const RoutesComponent: FC = () => {
         const params = new URLSearchParams(window.location.search);
         const chargeId = params.get("charge_id");
         if(chargeId){
-            setShouldRefetch(true)
+            setShouldRefetch(true);
         } else {
-            setShouldRefetch(false)
+            setShouldRefetch(false);
         }
     }, []);
     useEffect(() => {
@@ -47,10 +47,14 @@ const RoutesComponent: FC = () => {
     }, [shouldRefetch, show_plans]);
     if(isLoading || shouldRefetch){
         return(
-            <div className="w-full h-[100vh] flex justify-center items-center">
+            <div className="w-full h-[100vh] flex flex-col gap-4 p-4 justify-center items-center">
                 <Spinner accessibilityLabel="Spinner example" size="large" />
-                <Text as="h2">Approval in Progress</Text>
-                <Text as="p">Your request has been received and is being reviewed. This usually takes a few moments—once approved, you’ll be all set to continue.</Text>
+                {shouldRefetch && (
+                    <>
+                        <Text as="h2">Approval in Progress</Text>
+                        <Text as="p">Your request has been received and is being reviewed. This usually takes a few moments—once approved, you’ll be all set to continue.</Text>
+                    </>
+                )}
             </div>
         )
     }
