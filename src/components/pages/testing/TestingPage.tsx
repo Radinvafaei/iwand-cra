@@ -17,11 +17,12 @@ import { DesktopBrowser } from "src/components/desktop-browser";
 import SupportButton from "src/components/support-button/SupportButton";
 import { CongratsIcon } from "../../../icons";
 import {useShowPlansManager} from "../../../providers/ShopifyProvider";
-
+import {Tabs as Tab} from 'src/service/interface'
+import AIWait from "../../AIWait/AIWait";
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { active_tabs } = useShowPlansManager()
+  const { active_tabs } = useShowPlansManager();
   const tabs = [
     {
       id: "mobile",
@@ -47,7 +48,9 @@ const TestingPage: FC = () => {
     setIsModalOpen(false);
     console.log("Modal closed");
   }, []);
-
+  if(!active_tabs.includes(Tab.Testing)){
+    return <AIWait />
+  }
   return (
     <Page
       fullWidth

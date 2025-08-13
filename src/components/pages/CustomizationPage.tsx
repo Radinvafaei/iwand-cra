@@ -29,12 +29,15 @@ import {
   useGetCustomization,
   useUpdateCustomization,
 } from "src/service/customizationServices/customization.service";
+import {Tabs as Tab} from "../../service/interface";
+import AIWait from "../AIWait/AIWait";
+import {useShowPlansManager} from "../../providers/ShopifyProvider";
 
 export default function CustomizationPage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [previewTab, setPreviewTab] = useState("web");
   const [mainPageSelectedTab, setMainPageSelectedTab] = useState("opening");
-
+  const {active_tabs} = useShowPlansManager();
   const { data: customizationData, isLoading: customizationLoading } =
     useGetCustomization("wand-test-store.myshopify.com");
 
@@ -88,6 +91,10 @@ export default function CustomizationPage() {
       console.error("Error updating customization:", error);
     }
   };
+
+  if(!active_tabs.includes(Tab.Customization)){
+    return <AIWait />
+  }
 
   return customizationLoading ? (
     <div className="inset-0 z-10 absolute flex items-center justify-center">
