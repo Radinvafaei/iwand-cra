@@ -16,8 +16,9 @@ import { AiStyleCard } from 'src/components/cards/ai-style-card';
 import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
 import {useConversationUsage, useGetProductsProcessed, usePublish} from "src/service/hooks";
-import {useToast, useNavigate, useNavigationHistory} from "@shopify/app-bridge-react";
+import {useToast} from "@shopify/app-bridge-react";
 import {useShowPlansManager} from "src/providers/ShopifyProvider";
+import useShopifyRedirect from "src/hooks/useShopifyRedirect";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
@@ -95,7 +96,7 @@ const DashboardPage = () => {
     }
   }, [productsProcessed?.data?.data?.all_products_processed]);
 
-  const navigate = useNavigate();
+  const navigate = useShopifyRedirect();
 
   const handleLaunch = async () => {
     try {
@@ -110,7 +111,7 @@ const DashboardPage = () => {
     }
   };
   const onNavigate = (pathname: string) => {
-    navigate(pathname, {replace: false});
+    navigate(pathname);
   }
   return (
       <>
