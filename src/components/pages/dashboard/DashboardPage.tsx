@@ -17,7 +17,7 @@ import { BaseCard } from 'src/components/cards/base-card';
 import useGetShopName from "src/hooks/useGetShopName";
 import {useConversationUsage, useGetProductsProcessed, usePublish} from "src/service/hooks";
 import {useToast, useNavigate, useNavigationHistory} from "@shopify/app-bridge-react";
-import {useShowPlansManager} from "../../../providers/ShopifyProvider";
+import {useShowPlansManager} from "src/providers/ShopifyProvider";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
@@ -96,7 +96,7 @@ const DashboardPage = () => {
   }, [productsProcessed?.data?.data?.all_products_processed]);
 
   const navigate = useNavigate();
-  const {push, replace} = useNavigationHistory()
+
   const handleLaunch = async () => {
     try {
       const {data} = await mutateAsync();
@@ -110,10 +110,7 @@ const DashboardPage = () => {
     }
   };
   const onNavigate = (pathname: string) => {
-    navigate({pathname});
-    navigate(pathname);
-    push({pathname});
-    replace({pathname});
+    navigate(pathname, {replace: false});
   }
   return (
       <>
