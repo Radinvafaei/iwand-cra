@@ -39,6 +39,7 @@ const RoutesComponent: FC = () => {
                     setShouldRefetch(true);
                     plans_refetch();
                 } else {
+                    window.location.reload();
                     setShouldRefetch(false);
                 }
             }, 1000);
