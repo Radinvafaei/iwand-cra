@@ -19,6 +19,7 @@ import {useConversationUsage, useGetProductsProcessed, usePublish} from "src/ser
 import {useToast} from "@shopify/app-bridge-react";
 import {useShowPlansManager} from "src/providers/ShopifyProvider";
 import useShopifyRedirect from "src/hooks/useShopifyRedirect";
+import {useNavigate} from "react-router-dom";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
@@ -27,6 +28,7 @@ const DashboardPage = () => {
   const productsProcessed = useGetProductsProcessed(shopName!);
   const toast = useToast();
   const { active_tabs_refetch } = useShowPlansManager();
+  const push = useNavigate()
   const { mutateAsync, data } = usePublish({shop: shopName!, is_published: true});
  /* const { chartData, chartAgents } = useMemo(() => {
     if (!data?.data?.agents) {
@@ -112,6 +114,7 @@ const DashboardPage = () => {
   };
   const onNavigate = (pathname: string) => {
     navigate(pathname);
+    push(pathname);
   }
   return (
       <>
