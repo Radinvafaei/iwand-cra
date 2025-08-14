@@ -29,18 +29,16 @@ import {
   useGetCustomization,
   useUpdateCustomization,
 } from "src/service/customizationServices/customization.service";
-import {Tabs as Tab} from "../../service/interface";
 import AIWait from "../AIWait/AIWait";
-import {useShowPlansManager} from "../../providers/ShopifyProvider";
+import { useShowPlansManager } from "../../providers/ShopifyProvider";
 
 export default function CustomizationPage() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [previewTab, setPreviewTab] = useState("web");
   const [mainPageSelectedTab, setMainPageSelectedTab] = useState("opening");
-  const {active_tabs} = useShowPlansManager();
+  const { active_tabs } = useShowPlansManager();
   const { data: customizationData, isLoading: customizationLoading } =
     useGetCustomization("wand-test-store.myshopify.com");
-
   useEffect(() => {
     if (customizationData?.data) {
       setForm(customizationData?.data.customization_config);
@@ -92,8 +90,8 @@ export default function CustomizationPage() {
     }
   };
 
-  if(!active_tabs.includes(Tab.Customization)){
-    return <AIWait />
+  if (!active_tabs?.includes("Customization")) {
+    return <AIWait />;
   }
 
   return customizationLoading ? (

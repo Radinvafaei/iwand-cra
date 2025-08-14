@@ -16,8 +16,7 @@ import { MobileBrowser } from "src/components/mobile-browser";
 import { DesktopBrowser } from "src/components/desktop-browser";
 import SupportButton from "src/components/support-button/SupportButton";
 import { CongratsIcon } from "../../../icons";
-import {useShowPlansManager} from "../../../providers/ShopifyProvider";
-import {Tabs as Tab} from 'src/service/interface'
+import { useShowPlansManager } from "../../../providers/ShopifyProvider";
 import AIWait from "../../AIWait/AIWait";
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -48,8 +47,8 @@ const TestingPage: FC = () => {
     setIsModalOpen(false);
     console.log("Modal closed");
   }, []);
-  if(!active_tabs.includes(Tab.Testing)){
-    return <AIWait />
+  if (!active_tabs.includes("Testing")) {
+    return <AIWait />;
   }
   return (
     <Page
