@@ -61,7 +61,6 @@ const RoutesComponent: FC = () => {
     return (
         <Routes>
             {root}
-            <Route path="/" element={<DashboardPage />} />
             <Route path="/config" element={<AgentConfigPage />} />
             <Route path="/conversation" element={<ConversationPage />} />
             <Route path="/testing" element={<TestingPage />} />
