@@ -6,4 +6,5 @@ export interface BaseCardProps {
   completedMessage?: string;
   buttonText?: string;
   onButtonClick?: () => void;
+  isPublished?: boolean;
 }

@@ -1,10 +1,10 @@
-'use client';
-import type {FC} from 'react';
-import type {BaseCardProps} from './interface';
-import { InlineStack, BlockStack, Text, Icon, Button } from '@shopify/polaris';
-import { CheckIcon } from '@shopify/polaris-icons';
-import {Link} from "react-router-dom";
-import {useNavigationHistory} from "@shopify/app-bridge-react";
+"use client";
+import type { FC } from "react";
+import type { BaseCardProps } from "./interface";
+import { InlineStack, BlockStack, Text, Icon, Button } from "@shopify/polaris";
+import { CheckIcon } from "@shopify/polaris-icons";
+import { Link } from "react-router-dom";
+import { useNavigationHistory } from "@shopify/app-bridge-react";
 
 const BaseCard: FC<BaseCardProps> = ({
   title,
@@ -12,22 +12,23 @@ const BaseCard: FC<BaseCardProps> = ({
   completedMessage,
   buttonText,
   onButtonClick,
+  isPublished,
 }) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: '340px',
-        backgroundColor: 'white',
-        border: '1px solid',
-        alignContent: 'space-between',
-        borderColor: '#DEDEFA',
-        borderRadius: '1rem',
-        padding: '20px',
+        display: "flex",
+        flexDirection: "column",
+        minWidth: "340px",
+        backgroundColor: "white",
+        border: "1px solid",
+        alignContent: "space-between",
+        borderColor: "#DEDEFA",
+        borderRadius: "1rem",
+        padding: "20px",
       }}
     >
-      <BlockStack gap={completed ? '200' : '1000'}>
+      <BlockStack gap={completed ? "200" : "1000"}>
         <Text as="h3" variant="headingMd" fontWeight="bold">
           {title}
         </Text>
@@ -37,9 +38,9 @@ const BaseCard: FC<BaseCardProps> = ({
               <BlockStack align="start" inlineAlign="start" gap="400">
                 <div
                   style={{
-                    display: 'flex',
-                    color: '#00BF6F',
-                    fontStyle: 'italic',
+                    display: "flex",
+                    color: "#00BF6F",
+                    fontStyle: "italic",
                   }}
                 >
                   <Icon source={CheckIcon} accessibilityLabel="Completed" />
@@ -50,15 +51,15 @@ const BaseCard: FC<BaseCardProps> = ({
           </>
         )}
         <InlineStack align="end">
-              <Button
-                  disabled={!completed}
-                  external
-                  onClick={onButtonClick}
-                  size="large"
-                  variant="primary"
-              >
-                  {buttonText}
-              </Button>
+          <Button
+            disabled={!completed || isPublished === true}
+            external
+            onClick={onButtonClick}
+            size="large"
+            variant="primary"
+          >
+            {buttonText}
+          </Button>
         </InlineStack>
       </BlockStack>
     </div>
