@@ -66,7 +66,6 @@ const DashboardPage = () => {
       }
     } catch (e) {
       toast.show(`an error occurred: ${JSON.stringify(e)}`, { isError: true });
-      console.error(e);
     }
   };
   const onNavigate = (pathname: string) => {
