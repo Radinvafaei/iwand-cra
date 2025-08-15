@@ -28,7 +28,6 @@ import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
-  // const { data } = useGetAgentUsage(shopName || 'test');
   const conversationUsage = useConversationUsage(shopName!);
   const productsProcessed = useGetProductsProcessed(shopName!);
   const toast = useToast();
@@ -62,6 +61,7 @@ const DashboardPage = () => {
       const { data } = await mutateAsync();
       if (data.is_published) {
         await active_tabs_refetch();
+        setIsPublishedState(true);
         toast.show("The app has been published");
       }
     } catch (e) {
