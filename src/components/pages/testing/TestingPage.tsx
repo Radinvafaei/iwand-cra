@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, useState, useCallback } from "react";
+import { type FC, useState, useCallback, useEffect } from "react";
 import {
   Page,
   Button,
@@ -18,10 +18,14 @@ import SupportButton from "src/components/support-button/SupportButton";
 import { CongratsIcon } from "../../../icons";
 import { useShowPlansManager } from "../../../providers/ShopifyProvider";
 import AIWait from "../../AIWait/AIWait";
+import { useAppBridge } from "@shopify/app-bridge-react";
+import { getSessionToken } from "@shopify/app-bridge-utils";
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { active_tabs } = useShowPlansManager();
+  const app = useAppBridge(); // ✅ this is your App Bridge instance
+
   const tabs = [
     {
       id: "mobile",
@@ -47,10 +51,41 @@ const TestingPage: FC = () => {
     setIsModalOpen(false);
     console.log("Modal closed");
   }, []);
+
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchToken = async () => {
+      const sessionToken = await getSessionToken(app);
+      const response = await fetch(
+        "https://orchestrator.iwand.style/auth/admin-token",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setLoading(false);
+      const { token } = await response.json();
+      setToken(token);
+    };
+
+    fetchToken();
+  }, [app]);
+
   if (!active_tabs.includes("Testing")) {
     return <AIWait />;
   }
-  return (
+
+  return loading ? (
+    <div className="inset-0 z-10 absolute flex items-center justify-center">
+      Loading...
+    </div>
+  ) : (
     <Page
       fullWidth
       title="Testing"
@@ -68,8 +103,8 @@ const TestingPage: FC = () => {
               justifyContent: "center",
             }}
           >
-            {selectedTab === 0 && <MobileBrowser />}
-            {selectedTab === 1 && <DesktopBrowser />}
+            {selectedTab === 0 && <MobileBrowser token={token} />}
+            {selectedTab === 1 && <DesktopBrowser token={token} />}
           </div>
         </Tabs>
       </Card>

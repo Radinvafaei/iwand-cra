@@ -7,6 +7,7 @@ import { MicrophoneIcon, PlusIcon, XIcon } from "@shopify/polaris-icons";
 
 const MobileBrowser: FC<MobileBrowserProps> = ({
   defaultSrc = "about:blank",
+  token,
 }) => {
   const [iframeSrc, setIframeSrc] = useState(defaultSrc);
   const [searchValue, setSearchValue] = useState("");
@@ -26,7 +27,7 @@ const MobileBrowser: FC<MobileBrowserProps> = ({
   const openChat = () => setIsChatOpen(true);
   const closeChat = () => setIsChatOpen(false);
   useEffect(() => {
-    setTimeout(() => window.startBot?.(), 2000);
+    setTimeout(() => window.startBot?.(token), 2000);
   }, []);
 
   return (

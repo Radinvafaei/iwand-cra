@@ -6,10 +6,10 @@ import type { DesktopBrowserProps } from "./interface";
 import { PlusIcon, RefreshIcon, XIcon } from "@shopify/polaris-icons";
 declare global {
   interface Window {
-    startBot: () => void;
+    startBot: (token: string) => void;
   }
 }
-const DesktopBrowser: FC<DesktopBrowserProps> = () => {
+const DesktopBrowser: FC<DesktopBrowserProps> = ({ token }) => {
   const [inputValue, setInputValue] = useState("");
   const [iframeSrc, setIframeSrc] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -27,7 +27,7 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => window.startBot?.(), 2000);
+    setTimeout(() => window.startBot?.(token), 2000);
   }, []);
 
   return (
