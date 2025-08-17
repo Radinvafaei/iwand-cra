@@ -27,8 +27,8 @@ const DesktopBrowser: FC<DesktopBrowserProps> = ({ token }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => window.startBot?.(token), 2000);
-  }, []);
+    if (token) setTimeout(() => window.startBot?.(token), 2000);
+  }, [token]);
 
   return (
     <div

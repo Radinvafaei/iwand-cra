@@ -18,6 +18,7 @@ import { useGetActiveTabs, useShowPlans } from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
 import { NavigationLink } from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
 import useEmbedding from "./useEmbedding";
+
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
 
 const ShowPlansManager = createContext<IShowPlansManagerContext>(
