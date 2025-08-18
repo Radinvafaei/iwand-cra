@@ -8,16 +8,13 @@ import {
 } from "react";
 import { IConfig, IShowPlansManagerContext } from "./interface";
 import { BrowserRouter } from "react-router-dom";
-import {
-  Provider as AppBridgeProvider,
-  NavigationMenu,
-} from "@shopify/app-bridge-react";
+
 import AppBridgeError from "../components/ErrorComponents/AppBridgeError";
 import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConfigError";
 import { useGetActiveTabs, useShowPlans } from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
-import { NavigationLink } from "@shopify/app-bridge-react/components/NavigationMenu/NavigationMenu";
 import useEmbedding from "./useEmbedding";
+import { NavMenu } from "@shopify/app-bridge-react";
 
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
 
@@ -43,27 +40,10 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
     refetch: plans_refetch,
     isLoading,
   } = useShowPlans(name || "wand-test-store");
-  const [navigationLinks, setNavigationLinks] = useState<NavigationLink[]>([]);
+  const [navigationLinks, setNavigationLinks] = useState<boolean>(false);
   useEffect(() => {
     if (data?.data?.subscription_active) {
-      setNavigationLinks([
-        {
-          label: "Dashboard",
-          destination: "/",
-        },
-        {
-          label: "Plans",
-          destination: "/plans",
-        },
-        {
-          label: "Customization",
-          destination: "/customization",
-        },
-        {
-          label: "Testing",
-          destination: "/testing",
-        },
-      ]);
+      setNavigationLinks(true);
     }
   }, [data?.data]);
   useEffect(() => {
@@ -120,15 +100,22 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
             return <AppBridgeErrorContainer />;
           }
           return (
-            <AppBridgeProvider config={appBridgeConfig}>
-              <NavigationMenu
-                navigationLinks={navigationLinks}
-                matcher={(link, location) =>
-                  link.destination === (location as any)?.pathname
-                }
-              />
+            <>
+              <NavMenu>
+                {navigationLinks && (
+                  <>
+                    <a href="/" rel="home">
+                      Dashboard
+                    </a>
+                    <a href="/plans">Plans</a>
+                    <a href="/customization">Customization</a>
+                    <a href="/testing">Testing</a>
+                  </>
+                )}
+              </NavMenu>
+
               {children}
-            </AppBridgeProvider>
+            </>
           );
         })()}
       </ShowPlansManager.Provider>

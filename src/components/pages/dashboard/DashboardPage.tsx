@@ -21,16 +21,16 @@ import {
   useGetProductsProcessed,
   usePublish,
 } from "src/service/hooks";
-import { useToast } from "@shopify/app-bridge-react";
 import { useShowPlansManager } from "src/providers/ShopifyProvider";
 import useShopifyRedirect from "src/hooks/useShopifyRedirect";
 import { useNavigate } from "react-router-dom";
+import { useAppBridge } from "@shopify/app-bridge-react";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
   const conversationUsage = useConversationUsage(shopName!);
   const productsProcessed = useGetProductsProcessed(shopName!);
-  const toast = useToast();
+  const shopify = useAppBridge();
   const { active_tabs_refetch } = useShowPlansManager();
   const push = useNavigate();
   const { mutateAsync, data } = usePublish({
@@ -62,10 +62,12 @@ const DashboardPage = () => {
       if (data.is_published) {
         await active_tabs_refetch();
         setIsPublishedState(true);
-        toast.show("The app has been published");
+        shopify.toast.show("The app has been published");
       }
     } catch (e) {
-      toast.show(`an error occurred: ${JSON.stringify(e)}`, { isError: true });
+      shopify.toast.show(`an error occurred: ${JSON.stringify(e)}`, {
+        isError: true,
+      });
     }
   };
   const onNavigate = (pathname: string) => {

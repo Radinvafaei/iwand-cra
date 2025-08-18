@@ -18,13 +18,15 @@ import SupportButton from "src/components/support-button/SupportButton";
 import { CongratsIcon } from "../../../icons";
 import { useShowPlansManager } from "../../../providers/ShopifyProvider";
 import AIWait from "../../AIWait/AIWait";
-import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge-utils";
+import { useAppBridge } from "@shopify/app-bridge-react";
+import type { ClientApplication } from "@shopify/app-bridge";
+
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { active_tabs } = useShowPlansManager();
-  const app = useAppBridge(); // ✅ this is your App Bridge instance
+  const app = useAppBridge() as unknown as ClientApplication; // ✅ this is your App Bridge instance
 
   const tabs = [
     {

@@ -4,7 +4,6 @@ import type { BaseCardProps } from "./interface";
 import { InlineStack, BlockStack, Text, Icon, Button } from "@shopify/polaris";
 import { CheckIcon } from "@shopify/polaris-icons";
 import { Link } from "react-router-dom";
-import { useNavigationHistory } from "@shopify/app-bridge-react";
 
 const BaseCard: FC<BaseCardProps> = ({
   title,
