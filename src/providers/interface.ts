@@ -10,4 +10,5 @@ export interface IShowPlansManagerContext {
   active_tabs_refetch: Function;
   active_tabs: string[];
   isLoading: boolean;
+  app: { apiKey: string; host: string };
 }

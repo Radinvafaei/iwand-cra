@@ -20,13 +20,12 @@ import { useShowPlansManager } from "../../../providers/ShopifyProvider";
 import AIWait from "../../AIWait/AIWait";
 import { getSessionToken } from "@shopify/app-bridge-utils";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import type { ClientApplication } from "@shopify/app-bridge";
+import { createApp, type ClientApplication } from "@shopify/app-bridge";
 
 const TestingPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { active_tabs } = useShowPlansManager();
-  const app = useAppBridge() as unknown as ClientApplication; // ✅ this is your App Bridge instance
+  const { active_tabs, app } = useShowPlansManager();
 
   const tabs = [
     {
@@ -58,25 +57,27 @@ const TestingPage: FC = () => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    const fetchToken = async () => {
-      const sessionToken = await getSessionToken(app);
-      const response = await fetch(
-        "https://orchestrator.iwand.style/auth/admin-token",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${sessionToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setLoading(false);
-      const { token } = await response.json();
-      setToken(token);
-    };
+    if (app) {
+      setLoading(true);
+      const fetchToken = async () => {
+        const sessionToken = await getSessionToken(createApp(app));
+        const response = await fetch(
+          "https://orchestrator.iwand.style/auth/admin-token",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${sessionToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setLoading(false);
+        const { token } = await response.json();
+        setToken(token);
+      };
 
-    fetchToken();
+      fetchToken();
+    }
   }, [app]);
 
   if (!active_tabs.includes("Testing")) {

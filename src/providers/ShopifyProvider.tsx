@@ -46,12 +46,12 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
       setNavigationLinks(true);
     }
   }, [data?.data]);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const host = urlParams.get("host");
+  const shop = urlParams.get("shop");
   useEffect(() => {
     if (!isReady) return;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const host = urlParams.get("host");
-    const shop = urlParams.get("shop");
 
     if (!host) {
       setAppBridgeError("Missing host parameter");
@@ -87,6 +87,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           isLoading,
           plans_refetch,
           active_tabs_refetch,
+          app: { apiKey: SHOPIFY_API_KEY, host: host! },
         }}
       >
         {(() => {
@@ -104,9 +105,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
               <NavMenu>
                 {navigationLinks && (
                   <>
-                    <a href="/" rel="home">
-                      Dashboard
-                    </a>
+                    <a href="/">Dashboard</a>
                     <a href="/plans">Plans</a>
                     <a href="/customization">Customization</a>
                     <a href="/testing">Testing</a>
