@@ -15,6 +15,7 @@ import { useGetActiveTabs, useShowPlans } from "../service/hooks";
 import useGetShopName from "../hooks/useGetShopName";
 import useEmbedding from "./useEmbedding";
 import { NavMenu } from "@shopify/app-bridge-react";
+import { setAppConfig } from "./appProvider";
 
 const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
 
@@ -72,6 +73,10 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
 
       setAppBridgeConfig(config);
       setAppBridgeError(undefined);
+      setAppConfig({
+        apiKey: SHOPIFY_API_KEY,
+        host: host,
+      });
     } catch (error) {
       console.error("App Bridge config error:", error);
       setAppBridgeError("Failed to configure App Bridge");
