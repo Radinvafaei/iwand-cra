@@ -152,7 +152,6 @@ export const useShowPlans = (shop: string) =>
         params: { shop },
       }),
     queryKey: ["show-plans", shop],
-    enabled: false,
   });
 
 export const usePublish = (data: IPublishPayload) =>
