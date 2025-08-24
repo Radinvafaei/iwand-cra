@@ -17,7 +17,7 @@ import useEmbedding from "./useEmbedding";
 import { NavMenu } from "@shopify/app-bridge-react";
 import { setAppConfig } from "./appProvider";
 
-const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
+const SHOPIFY_API_KEY = "01be49c3b61290cb81d3e5c6255e415d";
 
 const ShowPlansManager = createContext<IShowPlansManagerContext>(
   {} as IShowPlansManagerContext
