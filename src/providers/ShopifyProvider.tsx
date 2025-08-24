@@ -32,16 +32,15 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
   const { refetch: active_tabs_refetch, data: active_tabs } = useGetActiveTabs(
     name || "wand-test-store"
   );
-  useEffect(() => {
-    console.log(active_tabs);
-  }, [active_tabs]);
 
   const {
     data,
     refetch: plans_refetch,
     isLoading,
   } = useShowPlans(name || "wand-test-store");
+
   const [navigationLinks, setNavigationLinks] = useState<boolean>(false);
+
   useEffect(() => {
     if (data?.data?.subscription_active) {
       setNavigationLinks(true);
@@ -90,7 +89,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           show_plans: !!data?.data?.subscription_active,
           active_tabs: active_tabs?.data?.active_tabs || [],
           isLoading,
-          plans_refetch,
+          plans_refetch: isReady ? plans_refetch : () => {},
           active_tabs_refetch,
           app: { apiKey: SHOPIFY_API_KEY, host: host! },
         }}
