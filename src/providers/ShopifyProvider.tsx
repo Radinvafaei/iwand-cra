@@ -107,14 +107,14 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           return (
             <>
               <NavMenu>
-                {navigationLinks && (
-                  <>
-                    <a href="/">Dashboard</a>
-                    <a href="/plans">Plans</a>
-                    <a href="/customization">Customization</a>
-                    <a href="/testing">Testing</a>
-                  </>
-                )}
+                {/* {navigationLinks && ( */}
+                <>
+                  <a href="/">Dashboard</a>
+                  <a href="/plans">Plans</a>
+                  <a href="/customization">Customization</a>
+                  <a href="/testing">Testing</a>
+                </>
+                {/* )} */}
               </NavMenu>
 
               {children}
