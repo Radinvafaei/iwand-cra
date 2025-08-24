@@ -89,7 +89,7 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           show_plans: !!data?.data?.subscription_active,
           active_tabs: active_tabs?.data?.active_tabs || [],
           isLoading,
-          plans_refetch: isReady ? plans_refetch : () => {},
+          plans_refetch: plans_refetch,
           active_tabs_refetch,
           app: { apiKey: SHOPIFY_API_KEY, host: host! },
         }}
