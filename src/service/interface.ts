@@ -381,7 +381,7 @@ export interface IGetActiveTabsResponse {
 }
 
 export interface EmbedUrlResponse {
-  redurect_url: string;
+  redirect_url: string;
 }
 
 // export enum Tabs {

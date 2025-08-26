@@ -65,11 +65,11 @@ const DashboardPage = () => {
       if (data.is_published) {
         await active_tabs_refetch();
         setIsPublishedState(true);
-        if (embedUrl?.data.redurect_url)
+        if (embedUrl?.data.redirect_url)
           if (window.top) {
-            window.top.location.href = embedUrl.data.redurect_url;
+            window.top.location.href = embedUrl.data.redirect_url;
           } else {
-            window.location.href = embedUrl.data.redurect_url;
+            window.location.href = embedUrl.data.redirect_url;
           }
       }
     } catch (e) {
