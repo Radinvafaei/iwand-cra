@@ -184,5 +184,4 @@ export const useGetEmbedUrl = (shop: string) =>
         params: { shop },
       }),
     queryKey: ["app-embed", shop],
-    enabled: false,
   });
