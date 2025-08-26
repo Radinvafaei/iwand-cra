@@ -31,21 +31,24 @@ import {
 } from "src/service/customizationServices/customization.service";
 import AIWait from "../AIWait/AIWait";
 import { useShowPlansManager } from "../../providers/ShopifyProvider";
+import useGetShopName from "src/hooks/useGetShopName";
 
 export default function CustomizationPage() {
+  const shopName = useGetShopName();
+
   const [selectedTab, setSelectedTab] = useState(0);
   const [previewTab, setPreviewTab] = useState("web");
   const [mainPageSelectedTab, setMainPageSelectedTab] = useState("opening");
   const { active_tabs } = useShowPlansManager();
   const { data: customizationData, isLoading: customizationLoading } =
-    useGetCustomization("wand-test-store.myshopify.com");
+    useGetCustomization(shopName!);
   useEffect(() => {
     if (customizationData?.data) {
       setForm(customizationData?.data.customization_config);
     }
   }, [customizationData]);
   const { mutate: updateCustimization, isPending: updateCustomizationLoading } =
-    useUpdateCustomization("wand-test-store.myshopify.com");
+    useUpdateCustomization(shopName!);
 
   const [productPageSelectedTab, setProductPageSelectedTab] =
     useState("opening");

@@ -380,6 +380,10 @@ export interface IGetActiveTabsResponse {
   is_published: true;
 }
 
+export interface EmbedUrlResponse {
+  redurect_url: string;
+}
+
 // export enum Tabs {
 //   Dashboard,
 //   Customization,

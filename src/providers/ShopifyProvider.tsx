@@ -76,6 +76,8 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
         apiKey: SHOPIFY_API_KEY,
         host: host,
       });
+      plans_refetch();
+      active_tabs_refetch();
     } catch (error) {
       console.error("App Bridge config error:", error);
       setAppBridgeError("Failed to configure App Bridge");
@@ -107,14 +109,14 @@ const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
           return (
             <>
               <NavMenu>
-                {/* {navigationLinks && ( */}
-                <>
-                  <a href="/">Dashboard</a>
-                  <a href="/plans">Plans</a>
-                  <a href="/customization">Customization</a>
-                  <a href="/testing">Testing</a>
-                </>
-                {/* )} */}
+                {navigationLinks && (
+                  <>
+                    <a href="/">Dashboard</a>
+                    <a href="/plans">Plans</a>
+                    <a href="/customization">Customization</a>
+                    <a href="/testing">Testing</a>
+                  </>
+                )}
               </NavMenu>
 
               {children}

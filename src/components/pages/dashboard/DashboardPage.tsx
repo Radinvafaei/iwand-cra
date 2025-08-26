@@ -18,6 +18,7 @@ import useGetShopName from "src/hooks/useGetShopName";
 import {
   useCheckPublishStatus,
   useConversationUsage,
+  useGetEmbedUrl,
   useGetProductsProcessed,
   usePublish,
 } from "src/service/hooks";
@@ -37,6 +38,8 @@ const DashboardPage = () => {
     shop: shopName!,
     is_published: true,
   });
+
+  const { data: embedUrl } = useGetEmbedUrl(shopName!);
 
   const { data: isPublished } = useCheckPublishStatus(shopName!);
 
@@ -62,7 +65,9 @@ const DashboardPage = () => {
       if (data.is_published) {
         await active_tabs_refetch();
         setIsPublishedState(true);
-        shopify.toast.show("The app has been published");
+
+        if (embedUrl?.data.redurect_url)
+          window.location.href = embedUrl.data.redurect_url;
       }
     } catch (e) {
       shopify.toast.show(`an error occurred: ${JSON.stringify(e)}`, {

@@ -18,6 +18,7 @@ import {
   IGetShowPlansResponse,
   IPublishPayload,
   IPublishResponse,
+  EmbedUrlResponse,
 } from "./interface";
 import { AxiosResponse } from "axios";
 
@@ -118,6 +119,7 @@ export const useGetActiveTabs = (shop: string) =>
         params: { shop },
       }),
     queryKey: ["active_tabs", shop],
+    enabled: false,
   });
 
 export const useGetPlansLink = (shop: string) =>
@@ -152,6 +154,7 @@ export const useShowPlans = (shop: string) =>
         params: { shop },
       }),
     queryKey: ["show-plans", shop],
+    enabled: false,
   });
 
 export const usePublish = (data: IPublishPayload) =>
@@ -170,4 +173,16 @@ export const useCheckPublishStatus = (shop: string) =>
     queryFn: async () =>
       httpClient.get("/check-publish-status", { params: { shop } }),
     queryKey: ["is-published", shop],
+  });
+
+export const useGetEmbedUrl = (shop: string) =>
+  useQuery<AxiosResponse<EmbedUrlResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: "/app-embed-url",
+        params: { shop },
+      }),
+    queryKey: ["app-embed", shop],
+    enabled: false,
   });
