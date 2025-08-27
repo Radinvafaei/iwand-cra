@@ -60,23 +60,23 @@ const DashboardPage = () => {
   const navigate = useShopifyRedirect();
 
   const handleLaunch = async () => {
-    try {
-      const { data } = await mutateAsync();
-      if (data.is_published) {
-        await active_tabs_refetch();
-        setIsPublishedState(true);
-        if (embedUrl?.data.redirect_url)
-          if (window.top) {
-            window.top.location.href = embedUrl.data.redirect_url;
-          } else {
-            window.location.href = embedUrl.data.redirect_url;
-          }
+    // try {
+    //   const { data } = await mutateAsync();
+    //   if (data.is_published) {
+    //     await active_tabs_refetch();
+    //     setIsPublishedState(true);
+    if (embedUrl?.data.redirect_url)
+      if (window.top) {
+        window.top.location.href = embedUrl.data.redirect_url;
+      } else {
+        window.location.href = embedUrl.data.redirect_url;
       }
-    } catch (e) {
-      shopify.toast.show(`an error occurred: ${JSON.stringify(e)}`, {
-        isError: true,
-      });
-    }
+    // }
+    // } catch (e) {
+    //   shopify.toast.show(`an error occurred: ${JSON.stringify(e)}`, {
+    //     isError: true,
+    //   });
+    // }
   };
   const onNavigate = (pathname: string) => {
     navigate(pathname);
