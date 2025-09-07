@@ -4,7 +4,7 @@ import { createApp } from "@shopify/app-bridge";
 import { getAppConfig } from "src/providers/appProvider";
 
 const httpClient = axios.create({
-  baseURL: "https://test-dev.iwand.style",
+  baseURL: "https://test-dev.iwand.style/api",
 });
 
 httpClient.interceptors.request.use(async (config) => {
