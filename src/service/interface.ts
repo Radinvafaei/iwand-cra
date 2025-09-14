@@ -384,6 +384,10 @@ export interface EmbedUrlResponse {
   redirect_url: string;
 }
 
+export interface EmbedEnabledResponse {
+  enabled: string;
+}
+
 // export enum Tabs {
 //   Dashboard,
 //   Customization,

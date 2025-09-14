@@ -19,6 +19,7 @@ import {
   IPublishPayload,
   IPublishResponse,
   EmbedUrlResponse,
+  EmbedEnabledResponse,
 } from "./interface";
 import { AxiosResponse } from "axios";
 
@@ -184,4 +185,15 @@ export const useGetEmbedUrl = (shop: string) =>
         params: { shop },
       }),
     queryKey: ["app-embed", shop],
+  });
+
+export const useGetEmbedEnabled = (shop: string) =>
+  useQuery<AxiosResponse<EmbedEnabledResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: "/app-embed-enabled",
+        params: { shop },
+      }),
+    queryKey: ["app-embed-enabled", shop],
   });
