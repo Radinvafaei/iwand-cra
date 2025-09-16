@@ -4,11 +4,11 @@ import { type FC, useEffect, useState } from "react";
 import { Button, TextField } from "@shopify/polaris";
 import type { DesktopBrowserProps } from "./interface";
 import { PlusIcon, RefreshIcon, XIcon } from "@shopify/polaris-icons";
-declare global {
-  interface Window {
-    startBot: (token: string) => void;
-  }
-}
+// declare global {
+//   interface Window {
+//     startBot: (token: string, env: "shop" | "test") => void;
+//   }
+// }
 const DesktopBrowser: FC<DesktopBrowserProps> = ({ token }) => {
   const [inputValue, setInputValue] = useState("");
   const [iframeSrc, setIframeSrc] = useState("");
@@ -26,9 +26,9 @@ const DesktopBrowser: FC<DesktopBrowserProps> = ({ token }) => {
     setIsChatOpen(!isChatOpen);
   };
 
-  useEffect(() => {
-    if (token) setTimeout(() => window.startBot?.(token), 2000);
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) setTimeout(() => window.startBot?.(token, "test"), 2000);
+  // }, [token]);
 
   return (
     <div

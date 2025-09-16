@@ -26,9 +26,9 @@ const MobileBrowser: FC<MobileBrowserProps> = ({
 
   const openChat = () => setIsChatOpen(true);
   const closeChat = () => setIsChatOpen(false);
-  useEffect(() => {
-    if (token) setTimeout(() => window.startBot?.(token), 2000);
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) setTimeout(() => window.startBot?.(token, "test"), 2000);
+  // }, [token]);
 
   return (
     <div

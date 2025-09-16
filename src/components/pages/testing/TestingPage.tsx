@@ -28,7 +28,15 @@ import { EmbedEnabledResponse } from "src/service/interface";
 
 declare global {
   interface Window {
-    startBot: (token: string) => void;
+    startBot: ({
+      token,
+      env,
+      shop,
+    }: {
+      token: string;
+      env: "shop" | "test";
+      shop: string;
+    }) => void;
   }
 }
 
@@ -115,8 +123,12 @@ export default function TestingPage() {
   }, [app]);
 
   useEffect(() => {
-    if (token) setTimeout(() => window.startBot?.(token), 2000);
-  }, [token]);
+    if (token && shopName)
+      setTimeout(
+        () => window.startBot?.({ token, env: "test", shop: shopName }),
+        2000
+      );
+  }, [token, shopName]);
 
   if (!active_tabs.includes("Testing")) {
     return <TestWaitMessage />;
@@ -127,7 +139,7 @@ export default function TestingPage() {
       Loading...
     </div>
   ) : (
-    <div className="min-h-full bg-white poppins p-6 flex flex-col">
+    <div className="bg-white poppins p-6 flex flex-col md:h-screen md:min-h-[780px]">
       <div>
         <h1 className="!text-[24px] !font-medium !mb-4">Test AI assistant</h1>
         <Card>
@@ -160,13 +172,15 @@ export default function TestingPage() {
           </div>
         </Card>
       </div>
-      <div className="flex-1 !mt-4 grid grid-cols-1 gap-4 [@media(min-width:960px)]:grid-cols-[auto_400px]">
-        <Card>
-          <div
-            className="!static [@media(max-width:960px)]:!min-h-fit"
-            id="bot-container"
-          ></div>
-        </Card>
+      <div className="flex-1 !mt-4 grid grid-cols-1 gap-4 [@media(min-width:960px)]:grid-cols-[calc(100vw_-_476px)_400px] md:h-[calc(100vh_-_164px)]">
+        <div
+          className="rounded-0 [@media(min-width:490px)]:!rounded-[12px] md:h-[calc(100vh_-_164px)] h-screen"
+          style={{
+            border: "1px solid #ddd",
+          }}
+        >
+          <div className="!static h-full" id="bot-container"></div>
+        </div>
         <div className="flex flex-col gap-4">
           <Card>
             <h3 className="!font-medium !text-base">Review Source</h3>
