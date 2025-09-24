@@ -139,7 +139,7 @@ export default function TestingPage() {
       Loading...
     </div>
   ) : (
-    <div className="bg-white poppins p-6 flex flex-col md:h-screen md:min-h-[780px]">
+    <div className="bg-white poppins p-6 flex flex-col md:min-h-[780px]">
       <div>
         <h1 className="!text-[24px] !font-medium !mb-4">Test AI assistant</h1>
         <Card>
@@ -174,7 +174,7 @@ export default function TestingPage() {
       </div>
       <div className="flex-1 !mt-4 grid grid-cols-1 gap-4 [@media(min-width:960px)]:grid-cols-[calc(100vw_-_476px)_400px] md:h-[calc(100vh_-_164px)]">
         <div
-          className="rounded-0 [@media(min-width:490px)]:!rounded-[12px] md:h-[calc(100vh_-_164px)] h-screen"
+          className="rounded-0 [@media(min-width:490px)]:!rounded-[12px] md:h-[calc(100vh_-_164px)] min-h-[600px]"
           style={{
             border: "1px solid #ddd",
           }}
@@ -241,7 +241,7 @@ export default function TestingPage() {
             </p>
             <a
               className="border border-solid border-[#272A34] rounded-lg bg-white px-4 h-8 flex items-center justify-center w-fit mt-4 text-xs font-medium"
-              href="https://wa.me/971552079860"
+              href="https://wa.me/491789166826"
               target="_blank"
               rel="noreferrer"
             >

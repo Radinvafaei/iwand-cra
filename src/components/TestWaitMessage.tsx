@@ -17,7 +17,7 @@ export default function TestWaitMessage() {
           <div className="!font-medium">💬 Have questions or need help?</div>
           <a
             className="border border-solid border-[#272A34] rounded-lg bg-white px-4 h-8 flex items-center justify-center w-full md:w-auto text-xs font-medium"
-            href="https://wa.me/971552079860"
+            href="https://wa.me/491789166826"
             target="_blank"
             rel="noreferrer"
           >
