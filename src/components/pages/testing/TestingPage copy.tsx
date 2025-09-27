@@ -63,7 +63,7 @@ const TestingPage: FC = () => {
       const fetchToken = async () => {
         const sessionToken = await getSessionToken(createApp(app));
         const response = await fetch(
-          "https://test-dev.iwand.style/auth/admin-token",
+          "https://orchestrator.iwand.style/auth/admin-token",
           {
             method: "POST",
             headers: {
