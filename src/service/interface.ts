@@ -385,7 +385,7 @@ export interface EmbedUrlResponse {
 }
 
 export interface EmbedEnabledResponse {
-  enabled: string;
+  enabled: boolean;
 }
 
 // export enum Tabs {

@@ -150,7 +150,7 @@ export default function TestingPage() {
                 iWAND’s app embed
               </h2>
               {embedEnabledLoading &&
-                (embedEnabled?.data.enabled === "true" ? (
+                (embedEnabled?.data.enabled === true ? (
                   <span className="bg-[#24C99D] rounded-full text-white text-xs h-5 px-2 pt-[2px]">
                     On
                   </span>
