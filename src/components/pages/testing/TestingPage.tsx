@@ -145,7 +145,7 @@ export default function TestingPage() {
           <div className="flex justify-between md:items-center flex-col md:!flex-row gap-2">
             <div className="flex gap-2 items-center">
               <img src={appEmbed} alt="App Embed" />
-              <h2 className="!font-medium !m-0 !text-base poppins">
+              <h2 className="!font-medium !m-0 !text-base poppins p-0">
                 iWAND’s app embed
               </h2>
               {embedEnabledLoading &&
