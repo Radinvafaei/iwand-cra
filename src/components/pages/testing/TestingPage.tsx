@@ -25,6 +25,7 @@ import testingFindSimilar from "src/assets/images/testing-find-silimar.svg";
 import { useGetEmbedEnabled, useGetEmbedUrl } from "src/service/hooks";
 import useGetShopName from "src/hooks/useGetShopName";
 import { EmbedEnabledResponse } from "src/service/interface";
+import httpClient from "src/service/client";
 
 declare global {
   interface Window {
@@ -103,18 +104,16 @@ export default function TestingPage() {
       setLoading(true);
       const fetchToken = async () => {
         const sessionToken = await getSessionToken(createApp(app));
-        const response = await fetch(
-          "https://orchestrator.iwand.style/auth/admin-token",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${sessionToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await httpClient.request({
+          method: "POST",
+          url: "/auth/admin-token",
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+            "Content-Type": "application/json",
+          },
+        });
         setLoading(false);
-        const { token } = await response.json();
+        const { token } = await response.data;
         setToken(token);
       };
 

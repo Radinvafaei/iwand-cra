@@ -7,7 +7,7 @@ export const useGetCustomization = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/customization-config",
+        url: "api/customization-config",
         params: { shop },
       }),
     queryKey: ["customization-config", shop],
@@ -18,7 +18,7 @@ export const useUpdateCustomization = (shop: string) =>
     mutationFn: async (data: any) =>
       httpClient.request({
         method: "POST",
-        url: "/customization-config",
+        url: "api/customization-config",
         data,
         params: { shop },
       }),

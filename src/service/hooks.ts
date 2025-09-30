@@ -28,7 +28,7 @@ export const useGetAgentUsage = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/agents-usage",
+        url: "/api/agents-usage",
         params: { shop },
       }),
     queryKey: ["agent-usage", shop],
@@ -39,7 +39,7 @@ export const useGetInsights = (params: TInsightsParams) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/insights",
+        url: "/api/insights",
         params,
       }),
     queryKey: ["insights", params],
@@ -50,7 +50,7 @@ export const useConversationUsage = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/conversation-usage",
+        url: "/api/conversation-usage",
         params: { shop },
       }),
     queryKey: ["conversation-usage", shop],
@@ -61,7 +61,7 @@ export const useConversations = (params: IGetConversationsParams) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/conversations",
+        url: "/api/conversations",
         params,
       }),
     queryKey: ["conversations", params],
@@ -72,7 +72,7 @@ export const useGetAnalytics = (params: IAnalyticsParams) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/insights",
+        url: "/api/insights",
         params,
       }),
     queryKey: ["insights", { params }],
@@ -83,7 +83,7 @@ export const useGetAgentsConfig = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/agents-config",
+        url: "/api/agents-config",
         params: { shop },
       }),
     queryKey: ["agents-config", shop],
@@ -94,7 +94,7 @@ export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) =>
     mutationFn: async () =>
       httpClient.request({
         method: "POST",
-        url: "/agents-config/toggle",
+        url: "/api/agents-config/toggle",
         data,
       }),
   });
@@ -106,7 +106,7 @@ export const usePostAgentConfigToggleWidget = (
     mutationFn: async () =>
       httpClient.request({
         method: "POST",
-        url: "/agents-config/widget-toggle",
+        url: "/api/agents-config/widget-toggle",
         data,
       }),
   });
@@ -116,7 +116,7 @@ export const useGetActiveTabs = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/shop/active-tabs",
+        url: "/api/shop/active-tabs",
         params: { shop },
       }),
     queryKey: ["active_tabs", shop],
@@ -128,7 +128,7 @@ export const useGetPlansLink = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: `/mantle/plans-url`,
+        url: `/api/mantle/plans-url`,
         params: { shop },
       }),
     queryKey: ["plans", shop],
@@ -139,7 +139,7 @@ export const useGetProductsProcessed = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: `/products-processed`,
+        url: `/api/products-processed`,
         params: { shop },
       }),
     refetchInterval: 60_000,
@@ -151,7 +151,7 @@ export const useShowPlans = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: `/show-plans`,
+        url: `/api/show-plans`,
         params: { shop },
       }),
     queryKey: ["show-plans", shop],
@@ -163,7 +163,7 @@ export const usePublish = (data: IPublishPayload) =>
     mutationFn: async () =>
       httpClient.request({
         method: "POST",
-        url: `/update-publish-status`,
+        url: `/api/update-publish-status`,
         data,
       }),
     mutationKey: ["update-publish-status", data],
@@ -181,7 +181,7 @@ export const useGetEmbedUrl = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/app-embed-url",
+        url: "/api/app-embed-url",
         params: { shop },
       }),
     queryKey: ["app-embed", shop],
@@ -192,7 +192,7 @@ export const useGetEmbedEnabled = (shop: string) =>
     queryFn: async () =>
       httpClient.request({
         method: "GET",
-        url: "/app-embed-enabled",
+        url: "/api/app-embed-enabled",
         params: { shop },
       }),
     queryKey: ["app-embed-enabled", shop],

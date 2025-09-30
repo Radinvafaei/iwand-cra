@@ -4,7 +4,7 @@ import { createApp } from "@shopify/app-bridge";
 import { getAppConfig } from "src/providers/appProvider";
 
 const httpClient = axios.create({
-  baseURL: "https://orchestrator.iwand.style/api",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 httpClient.interceptors.request.use(async (config) => {
