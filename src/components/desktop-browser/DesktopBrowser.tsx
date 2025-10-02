@@ -1,19 +1,23 @@
-'use client';
+"use client";
 
-import {type FC, useState } from 'react';
-import { Button, TextField } from '@shopify/polaris';
-import type {DesktopBrowserProps} from './interface';
-import { PlusIcon, RefreshIcon, XIcon } from '@shopify/polaris-icons';
-
-const DesktopBrowser: FC<DesktopBrowserProps> = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [iframeSrc, setIframeSrc] = useState('');
+import { type FC, useEffect, useState } from "react";
+import { Button, TextField } from "@shopify/polaris";
+import type { DesktopBrowserProps } from "./interface";
+import { PlusIcon, RefreshIcon, XIcon } from "@shopify/polaris-icons";
+// declare global {
+//   interface Window {
+//     startBot: (token: string, env: "shop" | "test") => void;
+//   }
+// }
+const DesktopBrowser: FC<DesktopBrowserProps> = ({ token }) => {
+  const [inputValue, setInputValue] = useState("");
+  const [iframeSrc, setIframeSrc] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleInputChange = (value: string) => {
     setInputValue(value);
     if (value.trim()) {
-      const url = value.startsWith('http') ? value : `https://${value}`;
+      const url = value.startsWith("http") ? value : `https://${value}`;
       setIframeSrc(url);
     }
   };
@@ -22,63 +26,67 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
     setIsChatOpen(!isChatOpen);
   };
 
+  // useEffect(() => {
+  //   if (token) setTimeout(() => window.startBot?.(token, "test"), 2000);
+  // }, [token]);
+
   return (
     <div
       style={{
-        width: '100%',
-        maxWidth: '1200px',
-        height: '600px',
-        border: '1px solid #ddd',
-        borderRadius: '10px',
-        overflow: 'hidden',
-        backgroundColor: '#f5f5f5',
-        position: 'relative',
-        margin: 'auto',
+        width: "100%",
+        maxWidth: "1200px",
+        height: "800px",
+        border: "1px solid #ddd",
+        borderRadius: "10px",
+        overflow: "hidden",
+        backgroundColor: "#f5f5f5",
+        position: "relative",
+        margin: "auto",
       }}
     >
       <div
         style={{
-          height: '40px',
-          backgroundColor: '#f0f0f0',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 10px',
-          borderBottom: '1px solid #ddd',
+          height: "40px",
+          backgroundColor: "#f0f0f0",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 10px",
+          borderBottom: "1px solid #ddd",
         }}
       >
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: "flex", gap: "8px" }}>
           <div
             style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              backgroundColor: '#ff5f57',
+              width: "12px",
+              height: "12px",
+              borderRadius: "50%",
+              backgroundColor: "#ff5f57",
             }}
           />
           <div
             style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              backgroundColor: '#ffbc2f',
+              width: "12px",
+              height: "12px",
+              borderRadius: "50%",
+              backgroundColor: "#ffbc2f",
             }}
           />
           <div
             style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              backgroundColor: '#28c840',
+              width: "12px",
+              height: "12px",
+              borderRadius: "50%",
+              backgroundColor: "#28c840",
             }}
           />
         </div>
 
         <div
           style={{
-            display: 'flex',
-            width: '100%',
-            alignContent: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            width: "100%",
+            alignContent: "center",
+            justifyContent: "center",
           }}
         >
           <TextField
@@ -92,8 +100,8 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
             connectedRight={
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 <Button
@@ -106,23 +114,23 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
           />
         </div>
 
-        {!isChatOpen && (
+        {/* {!isChatOpen && (
           <div
             style={{
-              position: 'absolute',
-              bottom: '80px',
-              right: '20px',
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: '#007bff',
-              color: '#fff',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '20px',
+              position: "absolute",
+              bottom: "80px",
+              right: "20px",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "20px",
               zIndex: 10,
             }}
           >
@@ -133,11 +141,14 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
               accessibilityLabel="Add theme"
             />
           </div>
-        )}
+        )} */}
       </div>
 
-      <div style={{ display: 'flex', height: 'calc(100% - 40px)' }}>
-        <iframe
+      <div
+        style={{ display: "flex", height: "calc(100% - 40px)" }}
+        id="bot-container"
+      >
+        {/* <iframe
           src={iframeSrc}
           style={{
             width: isChatOpen ? '50%' : '100%',
@@ -145,9 +156,9 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
             border: 'none',
           }}
           title="Desktop Browser"
-        />
+        /> */}
         {/*  ai part*/}
-        {isChatOpen && (
+        {/* {isChatOpen && (
           <div
             style={{
               width: '50%',
@@ -247,7 +258,7 @@ const DesktopBrowser: FC<DesktopBrowserProps> = () => {
               }}
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

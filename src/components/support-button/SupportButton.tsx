@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Button,
   Box,
@@ -6,10 +6,9 @@ import {
   InlineStack,
   BlockStack,
   Card,
-} from '@shopify/polaris';
-import { QuestionCircleIcon } from '@shopify/polaris-icons';
-import {GMailIcon, GMeetIcon, WhatsappIcon} from "src/icons";
-
+} from "@shopify/polaris";
+import { QuestionCircleIcon } from "@shopify/polaris-icons";
+import { GMailIcon, GMeetIcon, WhatsappIcon } from "src/icons";
 
 const SupportButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -19,17 +18,17 @@ const SupportButton = () => {
   };
 
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/971223455566', '_blank');
+    window.open("https://wa.me/491789166826", "_blank");
     setIsExpanded(false);
   };
 
   const handleScheduleMeeting = () => {
-    window.open('https://meet.google.com/', '_blank');
+    window.open("https://meet.google.com/", "_blank");
     setIsExpanded(false);
   };
 
   const handleSendEmail = () => {
-    window.open('mailto:support@yourcompany.com', '_blank');
+    window.open("mailto:support@yourcompany.com", "_blank");
     setIsExpanded(false);
   };
 
@@ -45,92 +44,97 @@ const SupportButton = () => {
           <Card padding="050" background="bg-surface-brand-active">
             <div
               style={{
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
+                cursor: "pointer",
+                transition: "all 0.2s ease",
               }}
               onClick={handleWhatsAppClick}
             >
               <InlineStack gap="300" align="start" blockAlign="center">
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '40px',
-                    height: '40px',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "40px",
+                    height: "40px",
                   }}
                 >
                   <WhatsappIcon />
                 </div>
-
-                <Text as="h3" variant="headingSm" tone="base">
-                  +971223455566
-                </Text>
+                <a href="https://wa.me/491789166826">
+                  <Text as="h3" variant="headingSm" tone="base">
+                    +491789166826
+                  </Text>
+                </a>
               </InlineStack>
             </div>
 
             <div
               style={{
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                minWidth: '280px',
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                minWidth: "280px",
               }}
               onClick={handleScheduleMeeting}
             >
               <InlineStack gap="300" align="start" blockAlign="center">
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '40px',
-                    height: '40px',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "40px",
+                    height: "40px",
                   }}
                 >
                   <GMeetIcon />
                 </div>
                 <BlockStack gap="050">
-                  <Text as="h3" variant="headingSm" tone="base">
-                    Schedule a meeting
-                  </Text>
+                  <a href="https://calendly.com/iwandstyle/shopify-support">
+                    <Text as="h3" variant="headingSm" tone="base">
+                      Schedule a meeting
+                    </Text>
+                  </a>
                 </BlockStack>
               </InlineStack>
             </div>
 
             <div
               style={{
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                minWidth: '280px',
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                minWidth: "280px",
               }}
               onClick={handleSendEmail}
             >
               <InlineStack gap="300" align="start" blockAlign="center">
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '40px',
-                    height: '40px',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "40px",
+                    height: "40px",
                   }}
                 >
                   <GMailIcon />
                 </div>
-                <Text
-                  alignment="center"
-                  as="h3"
-                  variant="headingSm"
-                  tone="base"
-                >
-                  Send an email
-                </Text>
+                <a href="mailto:iwandstyle@gmail.com">
+                  <Text
+                    alignment="center"
+                    as="h3"
+                    variant="headingSm"
+                    tone="base"
+                  >
+                    Send an email
+                  </Text>
+                </a>
               </InlineStack>
             </div>
           </Card>
         )}
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant="primary"
             size="large"

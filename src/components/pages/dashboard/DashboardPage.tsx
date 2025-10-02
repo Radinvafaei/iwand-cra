@@ -1,5 +1,5 @@
-'use client';
-import React, { useMemo } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Text,
@@ -9,186 +9,185 @@ import {
   Button,
   Box,
   Page,
-} from '@shopify/polaris';
-import { AgentsUsageChart } from 'src/components/agent-usage-chart';
-import { DonutChart } from 'src/components/donut-chart';
-import SupportButton from 'src/components/support-button/SupportButton';
-import { InsightsComponent } from 'src/components/insights-component';
-import { AiStyleCard } from 'src/components/cards/ai-style-card';
-import { BaseCard } from 'src/components/cards/base-card';
+} from "@shopify/polaris";
+import { DonutChart } from "src/components/donut-chart";
+import SupportButton from "src/components/support-button/SupportButton";
+import { AiStyleCard } from "src/components/cards/ai-style-card";
+import { BaseCard } from "src/components/cards/base-card";
 import useGetShopName from "src/hooks/useGetShopName";
-import { useGetAgentUsage } from "src/service/hooks";
+import {
+  useCheckPublishStatus,
+  useConversationUsage,
+  useGetEmbedUrl,
+  useGetProductsProcessed,
+  usePublish,
+} from "src/service/hooks";
+import { useShowPlansManager } from "src/providers/ShopifyProvider";
+import useShopifyRedirect from "src/hooks/useShopifyRedirect";
+import { useNavigate } from "react-router-dom";
+import { useAppBridge } from "@shopify/app-bridge-react";
 
 const DashboardPage = () => {
   const shopName = useGetShopName();
-  const { data } = useGetAgentUsage(shopName || 'test');
-  const { chartData, chartAgents } = useMemo(() => {
-    if (!data?.data?.agents) {
-      return { chartData: [], chartAgents: [] };
+  const conversationUsage = useConversationUsage(shopName!);
+  const productsProcessed = useGetProductsProcessed(shopName!);
+  const shopify = useAppBridge();
+  const { active_tabs_refetch } = useShowPlansManager();
+  const push = useNavigate();
+  const { mutateAsync, data } = usePublish({
+    shop: shopName!,
+    is_published: true,
+  });
+
+  const { data: embedUrl } = useGetEmbedUrl(shopName!);
+
+  const { data: isPublished } = useCheckPublishStatus(shopName!);
+
+  const [isPublishedState, setIsPublishedState] = useState(false);
+
+  useEffect(() => {
+    if (isPublished?.data.is_published) {
+      setIsPublishedState(true);
     }
+  }, [isPublished]);
 
-    const apiResponse = data.data;
+  useEffect(() => {
+    if (productsProcessed?.data?.data?.all_products_processed) {
+      active_tabs_refetch();
+    }
+  }, [productsProcessed?.data?.data?.all_products_processed]);
 
-    const allDates = new Set<string>();
-    apiResponse.agents.forEach(agent => {
-      agent.usage.forEach(usage => {
-        allDates.add(usage.date);
-      });
-    });
+  const navigate = useShopifyRedirect();
 
-    const sortedDates = Array.from(allDates).sort();
-
-    const colors = [
-      '#8B5CF6',
-      '#10B981',
-      '#F59E0B',
-      '#EF4444',
-      '#3B82F6',
-      '#EC4899',
-      '#06B6D4',
-      '#84CC16',
-      '#F97316'
-    ];
-
-    const agents = apiResponse.agents.map((agent, index) => ({
-      id: agent.name.toLowerCase().replace(/\s+/g, '-'),
-      name: agent.name,
-      color: colors[index % colors.length],
-    }));
-
-    const chartData = sortedDates.map(date => {
-      const dataPoint: any = {
-        date,
-        total: 0,
-      };
-
-      apiResponse.agents.forEach(agent => {
-        const agentId = agent.name.toLowerCase().replace(/\s+/g, '-');
-        const usageForDate = agent.usage.find(usage => usage.date === date);
-        const count = usageForDate?.count || 0;
-        dataPoint[agentId] = count;
-        dataPoint.total += count;
-      });
-
-      return dataPoint;
-    });
-
-    return { chartData, chartAgents: agents };
-  }, [data]);
-
-  const handleDateRangeChange = (range: { start: Date; end: Date }) => {
-    console.log('Date range changed:', range);
+  const handleLaunch = async () => {
+    // try {
+    //   const { data } = await mutateAsync();
+    //   if (data.is_published) {
+    //     await active_tabs_refetch();
+    //     setIsPublishedState(true);
+    if (embedUrl?.data.redirect_url)
+      if (window.top) {
+        window.top.location.href = embedUrl.data.redirect_url;
+      } else {
+        window.location.href = embedUrl.data.redirect_url;
+      }
+    // }
+    // } catch (e) {
+    //   shopify.toast.show(`an error occurred: ${JSON.stringify(e)}`, {
+    //     isError: true,
+    //   });
+    // }
   };
-
-  const handleAgentFilterChange = (selectedAgentIds: string[]) => {
-    console.log('Selected agents:', selectedAgentIds);
+  const onNavigate = (pathname: string) => {
+    navigate(pathname);
+    push(pathname);
   };
-
-  const handleTestClick = () => console.log('Mock test clicked');
-
-  const donutChartData = [
-    { name: 'Used', value: 1980 },
-    { name: 'Remaining', value: 20 },
-  ];
-
   return (
-      <>
-        <div
-            style={{
-              background: '#2C294B',
-              padding: '2rem 3rem',
-              color: 'white',
-            }}
-        >
-          <InlineStack align="space-between" blockAlign="center">
-            <BlockStack gap="200">
-              <Text as="h1" variant="heading2xl" tone="inherit">
-                Dashboard
-              </Text>
-              <Text as="p" variant="bodyMd" tone="subdued">
-                Welcome Back!
-              </Text>
-            </BlockStack>
-            <InlineStack gap="100">
-              <Text as="p" variant="bodySm" tone="inherit">
-                Do you have any question?
-              </Text>
-              <Button variant="primary" size="large">
-                Lets Talk
-              </Button>
-            </InlineStack>
+    <>
+      <div
+        style={{
+          background: "#2C294B",
+          padding: "2rem 3rem",
+          color: "white",
+        }}
+      >
+        <InlineStack align="space-between" blockAlign="center">
+          <BlockStack gap="200">
+            <Text as="h1" variant="heading2xl" tone="inherit">
+              Dashboard
+            </Text>
+            <Text as="p" variant="bodyMd" tone="subdued">
+              Welcome Back!
+            </Text>
+          </BlockStack>
+          <InlineStack gap="100">
+            <Text as="p" variant="bodySm" tone="inherit">
+              Do you have any question?
+            </Text>
+            <Button variant="primary" size="large">
+              Lets Talk
+            </Button>
           </InlineStack>
-        </div>
-        <Page fullWidth>
-          <Layout>
-            <Layout.Section>
-              <Card>
-                <Box padding="600">
-                  <BlockStack gap="400">
-                    <Text as="h2" variant="headingLg">
-                      Your AI Stylist is under launch
-                    </Text>
-
-                    <InlineStack gap="400" align="start">
-                      <AiStyleCard
-                          title="AI Stylist"
-                          status="in-progress"
-                          buttonText="Test it"
-                          progressMessage="in progress"
-                          subtitle="Product information is gathering"
-                          onButtonClick={handleTestClick}
-                      />
-                      <BaseCard
-                          completed={false}
-                          title="Customization"
-                          completedMessage="completed!"
-                          buttonText="Check it"
-                          onButtonClick={handleTestClick}
-                      />
-                      <BaseCard
-                          completed
-                          title="Widget state"
-                          completedMessage="completed!"
-                          buttonText="Launch"
-                          onButtonClick={handleTestClick}
-                      />
-                    </InlineStack>
-                  </BlockStack>
-                </Box>
-              </Card>
-
-              <Box paddingBlockStart="600">
-                <InsightsComponent shop={shopName || ''} />
+        </InlineStack>
+      </div>
+      <Page fullWidth>
+        <Layout>
+          <Layout.Section>
+            <Card>
+              <Box padding="600">
+                <BlockStack gap="400">
+                  <Text as="h2" variant="headingLg">
+                    {productsProcessed.data?.data?.all_products_processed
+                      ? "Your AI Stylist is ready"
+                      : "Your AI Stylist is under launch"}
+                  </Text>
+                  <InlineStack gap="400" align="start">
+                    <AiStyleCard
+                      title="AI Stylist"
+                      status={
+                        productsProcessed.data?.data?.all_products_processed
+                          ? "completed"
+                          : "in-progress"
+                      }
+                      buttonText="Test it"
+                      progressMessage="in progress"
+                      subtitle="Product information is gathering"
+                      onButtonClick={() => onNavigate("/testing")}
+                      isPublished={isPublishedState}
+                    />
+                    <BaseCard
+                      completed={
+                        productsProcessed.data?.data?.all_products_processed
+                      }
+                      title="Customization"
+                      completedMessage="completed!"
+                      buttonText="Check it"
+                      onButtonClick={() => onNavigate("/customization")}
+                    />
+                    <BaseCard
+                      completed={
+                        data?.data?.is_published
+                          ? !data?.data?.is_published
+                          : productsProcessed.data?.data?.all_products_processed
+                      }
+                      title="Widget state"
+                      completedMessage="completed!"
+                      buttonText="Launch"
+                      onButtonClick={handleLaunch}
+                      isPublished={isPublishedState}
+                    />
+                  </InlineStack>
+                </BlockStack>
               </Box>
-
-              <Box paddingBlockStart="600">
-                <Layout>
-                  <Layout.Section variant="oneHalf">
+            </Card>
+            {/*<Box paddingBlockStart="600">
+                <InsightsComponent shop={shopName || ''} />
+              </Box>*/}
+            <Box paddingBlockStart="600">
+              <Layout>
+                {/*<Layout.Section variant="oneHalf">
                     <AgentsUsageChart
                         data={chartData}
                         agents={chartAgents}
                         onDateRangeChange={handleDateRangeChange}
                         onAgentFilterChange={handleAgentFilterChange}
                     />
-                  </Layout.Section>
+                  </Layout.Section>*/}
+                <Layout.Section variant="oneThird">
+                  {conversationUsage?.data?.data && (
+                    <DonutChart {...conversationUsage?.data?.data} />
+                  )}
+                </Layout.Section>
+              </Layout>
+            </Box>
 
-                  <Layout.Section variant="oneThird">
-                    <DonutChart
-                        title="Conversation Usage"
-                        data={donutChartData}
-                        maxValue={2000}
-                    />
-                  </Layout.Section>
-                </Layout>
-              </Box>
-
-              <Box paddingBlockStart="600">
-                <SupportButton />
-              </Box>
-            </Layout.Section>
-          </Layout>
-        </Page>
-      </>
+            <Box paddingBlockStart="600">
+              <SupportButton />
+            </Box>
+          </Layout.Section>
+        </Layout>
+      </Page>
+    </>
   );
 };
 

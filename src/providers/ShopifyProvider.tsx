@@ -1,105 +1,130 @@
-import {FC, PropsWithChildren, useEffect, useState} from "react";
-import {IConfig} from "./interface";
-import {BrowserRouter} from "react-router-dom";
-import { Provider as AppBridgeProvider, NavigationMenu } from '@shopify/app-bridge-react';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { IConfig, IShowPlansManagerContext } from "./interface";
+import { BrowserRouter } from "react-router-dom";
+
 import AppBridgeError from "../components/ErrorComponents/AppBridgeError";
 import AppBridgeErrorContainer from "../components/ErrorComponents/AppBridgeConfigError";
-const SHOPIFY_API_KEY = "be32a232bb533bbe2c475cc64ff75777";
-const useEmbedding = () => {
-    const [isEmbedded, setIsEmbedded] = useState(false);
-    const [isReady, setIsReady] = useState(false);
+import { useGetActiveTabs, useShowPlans } from "../service/hooks";
+import useGetShopName from "../hooks/useGetShopName";
+import useEmbedding from "./useEmbedding";
+import { NavMenu } from "@shopify/app-bridge-react";
+import { setAppConfig } from "./appProvider";
 
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const shop = urlParams.get('shop');
-        const embedded = urlParams.get('embedded') === '1';
-        const inIframe = window.top !== window.self;
+const SHOPIFY_API_KEY = process.env.REACT_APP_APP_KEY!;
 
-        setIsEmbedded(!!(inIframe && (embedded || shop)));
-        setIsReady(true);
-    }, []);
-
-    return { isEmbedded, isReady };
-};
+const ShowPlansManager = createContext<IShowPlansManagerContext>(
+  {} as IShowPlansManagerContext
+);
+export const useShowPlansManager = () => useContext(ShowPlansManager);
 
 const ShopifyProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { isReady, isEmbedded } = useEmbedding();
-    const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
-    const [appBridgeError, setAppBridgeError] = useState<string>();
-    useEffect(() => {
-        if (!isReady) return;
+  const { isReady, isEmbedded } = useEmbedding();
+  const [appBridgeConfig, setAppBridgeConfig] = useState<IConfig>();
+  const [appBridgeError, setAppBridgeError] = useState<string>();
+  const name = useGetShopName();
+  const { refetch: active_tabs_refetch, data: active_tabs } = useGetActiveTabs(
+    name || "wand-test-store"
+  );
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const host = urlParams.get('host');
-        const shop = urlParams.get('shop');
+  const {
+    data,
+    refetch: plans_refetch,
+    isLoading,
+  } = useShowPlans(name || "wand-test-store");
 
-        if (!host) {
-            setAppBridgeError('Missing host parameter');
-            return;
-        }
+  const [navigationLinks, setNavigationLinks] = useState<boolean>(false);
 
-        if (!shop) {
-            setAppBridgeError('Missing shop parameter');
-            return;
-        }
-
-        try {
-            const config = {
-                apiKey: SHOPIFY_API_KEY,
-                host: host,
-                forceRedirect: true,
-            };
-
-            setAppBridgeConfig(config);
-            setAppBridgeError(undefined);
-        } catch (error) {
-            console.error('App Bridge config error:', error);
-            setAppBridgeError('Failed to configure App Bridge');
-        }
-    }, [isReady]);
-    if (!isEmbedded) {
-        return (
-            <BrowserRouter>
-                {children}
-            </BrowserRouter>
-        );
+  useEffect(() => {
+    if (data?.data?.subscription_active) {
+      setNavigationLinks(true);
     }
-    if (appBridgeError) {
-        return (
-            <AppBridgeError appBridgeError={appBridgeError} />
-        );
-    }
-    if(!appBridgeConfig){
-        return <AppBridgeErrorContainer />
+  }, [data?.data]);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const host = urlParams.get("host");
+  const shop = urlParams.get("shop");
+  useEffect(() => {
+    if (!isReady) return;
+
+    if (!host) {
+      setAppBridgeError("Missing host parameter");
+      return;
     }
 
-    return (
-        <BrowserRouter>
-            <AppBridgeProvider config={appBridgeConfig}>
-                <NavigationMenu
-                    navigationLinks={[
-                        {
-                            label: 'Dashboard',
-                            destination: '/',
-                        },
-                        {
-                            label: 'Agent Config',
-                            destination: '/config',
-                        },
-                        {
-                            label: 'Testing',
-                            destination: '/test',
-                        },
-                        {
-                            label: 'Conversation',
-                            destination: '/conversation',
-                        }
-                    ]}
-                    matcher={(link, location) => link.destination === (location as any)?.pathname}
-                />
-                {children}
-            </AppBridgeProvider>
-        </BrowserRouter>
-    )
-}
+    if (!shop) {
+      setAppBridgeError("Missing shop parameter");
+      return;
+    }
+
+    try {
+      const config = {
+        apiKey: SHOPIFY_API_KEY,
+        host: host,
+        forceRedirect: true,
+      };
+
+      setAppBridgeConfig(config);
+      setAppBridgeError(undefined);
+      setAppConfig({
+        apiKey: SHOPIFY_API_KEY,
+        host: host,
+      });
+      plans_refetch();
+      active_tabs_refetch();
+    } catch (error) {
+      console.error("App Bridge config error:", error);
+      setAppBridgeError("Failed to configure App Bridge");
+    }
+  }, [isReady]);
+
+  return (
+    <BrowserRouter>
+      <ShowPlansManager.Provider
+        value={{
+          show_plans: !!data?.data?.subscription_active,
+          active_tabs: active_tabs?.data?.active_tabs || [],
+          isLoading,
+          plans_refetch: plans_refetch,
+          active_tabs_refetch,
+          app: { apiKey: SHOPIFY_API_KEY, host: host! },
+        }}
+      >
+        {(() => {
+          if (!isEmbedded) {
+            return children;
+          }
+          if (appBridgeError) {
+            return <AppBridgeError appBridgeError={appBridgeError} />;
+          }
+          if (!appBridgeConfig) {
+            return <AppBridgeErrorContainer />;
+          }
+          return (
+            <>
+              <NavMenu>
+                {navigationLinks && (
+                  <>
+                    <a href="/">Dashboard</a>
+                    <a href="/plans">Plans</a>
+                    <a href="/customization">Customization</a>
+                    <a href="/testing">Testing</a>
+                  </>
+                )}
+              </NavMenu>
+
+              {children}
+            </>
+          );
+        })()}
+      </ShowPlansManager.Provider>
+    </BrowserRouter>
+  );
+};
 export default ShopifyProvider;

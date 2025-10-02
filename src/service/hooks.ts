@@ -1,86 +1,199 @@
-import {useMutation, useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import httpClient from "./client";
 import {
-    IGetConversationsParams,
-    IAnalyticsParams,
-    TInsightsParams,
-    IAgentsUsageResponse,
-    IGetInsightsResponse,
-    IGetConversationUsageResponse,
-    IGetConversations,
-    IGetAnalyticsResponse,
-    IGetAgentConfigResponse,
-    IPostAgentConfigTogglePayload,
-    IPostAgentConfigToggleWidgetPayload
+  IGetConversationsParams,
+  IAnalyticsParams,
+  TInsightsParams,
+  IAgentsUsageResponse,
+  IGetInsightsResponse,
+  IGetConversationUsageResponse,
+  IGetConversations,
+  IGetAnalyticsResponse,
+  IGetAgentConfigResponse,
+  IPostAgentConfigTogglePayload,
+  IPostAgentConfigToggleWidgetPayload,
+  IGetActiveTabsResponse,
+  IGetPlansLinkResponse,
+  IGetProductsProcessed,
+  IGetShowPlansResponse,
+  IPublishPayload,
+  IPublishResponse,
+  EmbedUrlResponse,
+  EmbedEnabledResponse,
 } from "./interface";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-export const useGetAgentUsage = (shop: string) => useQuery<AxiosResponse<IAgentsUsageResponse>>({
-    queryFn: async () => httpClient.request({
+export const useGetAgentUsage = (shop: string) =>
+  useQuery<AxiosResponse<IAgentsUsageResponse>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/agents-usage',
-        params: {shop}
-    }),
-    queryKey: ['agent-usage', shop]
-})
+        url: "/api/agents-usage",
+        params: { shop },
+      }),
+    queryKey: ["agent-usage", shop],
+  });
 
-export const useGetInsights = (params: TInsightsParams) => useQuery<AxiosResponse<IGetInsightsResponse>>({
-    queryFn: async () => httpClient.request({
+export const useGetInsights = (params: TInsightsParams) =>
+  useQuery<AxiosResponse<IGetInsightsResponse>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/insights',
+        url: "/api/insights",
         params,
-    }),
-    queryKey: ['insights', params]
-})
+      }),
+    queryKey: ["insights", params],
+  });
 
-export const useConversationUsage = (shop: string) => useQuery<AxiosResponse<IGetConversationUsageResponse>>({
-    queryFn: async () => httpClient.request({
+export const useConversationUsage = (shop: string) =>
+  useQuery<AxiosResponse<IGetConversationUsageResponse>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/conversation-usage',
-        params: {shop},
-    }),
-    queryKey: ['conversation-usage', shop]
-})
+        url: "/api/conversation-usage",
+        params: { shop },
+      }),
+    queryKey: ["conversation-usage", shop],
+  });
 
-export const useConversations = (params: IGetConversationsParams) => useQuery<AxiosResponse<IGetConversations>>({
-    queryFn: async () => httpClient.request({
+export const useConversations = (params: IGetConversationsParams) =>
+  useQuery<AxiosResponse<IGetConversations>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/conversations',
+        url: "/api/conversations",
         params,
-    }),
-    queryKey: ['conversations', params]
-})
+      }),
+    queryKey: ["conversations", params],
+  });
 
-export const useGetAnalytics = (params: IAnalyticsParams) => useQuery<AxiosResponse<IGetAnalyticsResponse>>({
-    queryFn: async () => httpClient.request({
+export const useGetAnalytics = (params: IAnalyticsParams) =>
+  useQuery<AxiosResponse<IGetAnalyticsResponse>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/insights',
+        url: "/api/insights",
         params,
-    }),
-    queryKey: ['insights', {params}]
-})
+      }),
+    queryKey: ["insights", { params }],
+  });
 
-export const useGetAgentsConfig = (shop: string) => useQuery<AxiosResponse<IGetAgentConfigResponse>>({
-    queryFn: async () => httpClient.request({
+export const useGetAgentsConfig = (shop: string) =>
+  useQuery<AxiosResponse<IGetAgentConfigResponse>>({
+    queryFn: async () =>
+      httpClient.request({
         method: "GET",
-        url: '/agents-config',
-        params: {shop},
-    }),
-    queryKey: ['agents-config', shop]
-})
+        url: "/api/agents-config",
+        params: { shop },
+      }),
+    queryKey: ["agents-config", shop],
+  });
 
-export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) => useMutation({
-    mutationFn: async () => httpClient.request({
+export const usePostAgentConfigToggle = (data: IPostAgentConfigTogglePayload) =>
+  useMutation({
+    mutationFn: async () =>
+      httpClient.request({
         method: "POST",
-        url: '/agents-config/toggle',
+        url: "/api/agents-config/toggle",
         data,
-    })
-})
+      }),
+  });
 
-export const usePostAgentConfigToggleWidget = (data: IPostAgentConfigToggleWidgetPayload) => useMutation({
-    mutationFn: async () => httpClient.request({
+export const usePostAgentConfigToggleWidget = (
+  data: IPostAgentConfigToggleWidgetPayload
+) =>
+  useMutation({
+    mutationFn: async () =>
+      httpClient.request({
         method: "POST",
-        url: '/agents-config/widget-toggle',
-        data
-    })
-})
+        url: "/api/agents-config/widget-toggle",
+        data,
+      }),
+  });
+
+export const useGetActiveTabs = (shop: string) =>
+  useQuery<AxiosResponse<IGetActiveTabsResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: "/api/shop/active-tabs",
+        params: { shop },
+      }),
+    queryKey: ["active_tabs", shop],
+    enabled: false,
+  });
+
+export const useGetPlansLink = (shop: string) =>
+  useQuery<AxiosResponse<IGetPlansLinkResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: `/api/mantle/plans-url`,
+        params: { shop },
+      }),
+    queryKey: ["plans", shop],
+  });
+
+export const useGetProductsProcessed = (shop: string) =>
+  useQuery<AxiosResponse<IGetProductsProcessed>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: `/api/products-processed`,
+        params: { shop },
+      }),
+    refetchInterval: 60_000,
+    queryKey: ["products-processed", shop],
+  });
+
+export const useShowPlans = (shop: string) =>
+  useQuery<AxiosResponse<IGetShowPlansResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: `/api/show-plans`,
+        params: { shop },
+      }),
+    queryKey: ["show-plans", shop],
+    enabled: false,
+  });
+
+export const usePublish = (data: IPublishPayload) =>
+  useMutation<AxiosResponse<IPublishResponse>>({
+    mutationFn: async () =>
+      httpClient.request({
+        method: "POST",
+        url: `/api/update-publish-status`,
+        data,
+      }),
+    mutationKey: ["update-publish-status", data],
+  });
+
+export const useCheckPublishStatus = (shop: string) =>
+  useQuery<AxiosResponse<any>>({
+    queryFn: async () =>
+      httpClient.get("/check-publish-status", { params: { shop } }),
+    queryKey: ["is-published", shop],
+  });
+
+export const useGetEmbedUrl = (shop: string) =>
+  useQuery<AxiosResponse<EmbedUrlResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: "/api/app-embed-url",
+        params: { shop },
+      }),
+    queryKey: ["app-embed", shop],
+  });
+
+export const useGetEmbedEnabled = (shop: string) =>
+  useQuery<AxiosResponse<EmbedEnabledResponse>>({
+    queryFn: async () =>
+      httpClient.request({
+        method: "GET",
+        url: "/api/app-embed-enabled",
+        params: { shop },
+      }),
+    queryKey: ["app-embed-enabled", shop],
+  });

@@ -1,6 +1,5 @@
-'use client';
-import {type FC } from 'react';
-import type {AiStyleCardProps} from './interface';
+import { type FC } from "react";
+import type { AiStyleCardProps } from "./interface";
 import {
   InlineStack,
   BlockStack,
@@ -9,8 +8,8 @@ import {
   Spinner,
   Button,
   Divider,
-} from '@shopify/polaris';
-import { CheckIcon } from '@shopify/polaris-icons';
+} from "@shopify/polaris";
+import { CheckIcon } from "@shopify/polaris-icons";
 
 const AiStyleCard: FC<AiStyleCardProps> = ({
   title,
@@ -20,18 +19,19 @@ const AiStyleCard: FC<AiStyleCardProps> = ({
   completedMessage,
   buttonText,
   onButtonClick,
+  isPublished,
 }) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minInlineSize: '340px',
-        backgroundColor: 'white',
-        border: '1px solid',
-        borderColor: '#DEDEFA',
-        borderRadius: '1rem',
-        padding: '20px',
+        display: "flex",
+        flexDirection: "column",
+        minInlineSize: "340px",
+        backgroundColor: "white",
+        border: "1px solid",
+        borderColor: "#DEDEFA",
+        borderRadius: "1rem",
+        padding: "20px",
       }}
     >
       <BlockStack gap="200">
@@ -39,19 +39,19 @@ const AiStyleCard: FC<AiStyleCardProps> = ({
           {title}
         </Text>
 
-        {status === 'in-progress' ? (
+        {status === "in-progress" ? (
           <>
             <InlineStack gap="200" align="start" blockAlign="center">
               <div
                 style={{
-                  minWidth: '24px',
-                  minHeight: '24px',
-                  borderRadius: '50%',
+                  minWidth: "24px",
+                  minHeight: "24px",
+                  borderRadius: "50%",
                 }}
               >
                 <Spinner accessibilityLabel="Loading" size="small" />
               </div>
-              <p style={{ color: '#844AFF', fontStyle: 'italic' }}>
+              <p style={{ color: "#844AFF", fontStyle: "italic" }}>
                 {progressMessage}
               </p>
             </InlineStack>
@@ -67,9 +67,9 @@ const AiStyleCard: FC<AiStyleCardProps> = ({
               <BlockStack align="start" inlineAlign="start" gap="400">
                 <div
                   style={{
-                    display: 'flex',
-                    color: '#00BF6F',
-                    fontStyle: 'italic',
+                    display: "flex",
+                    color: "#00BF6F",
+                    fontStyle: "italic",
                   }}
                 >
                   <Icon source={CheckIcon} accessibilityLabel="Completed" />
@@ -81,9 +81,10 @@ const AiStyleCard: FC<AiStyleCardProps> = ({
             <InlineStack align="end">
               <Button
                 external
-                onClick={onButtonClick}
                 size="large"
                 variant="primary"
+                onClick={onButtonClick}
+                disabled={isPublished === true}
               >
                 {buttonText}
               </Button>
