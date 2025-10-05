@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tw": "tailwindcss -i ./src/index.css -o ./src/output.css --watch"
+    "tw": "tailwindcss -i ./src/index.css -o ./src/output.css --watch --minify"
   },
   "eslintConfig": {
     "extends": [
